@@ -69,16 +69,25 @@
 	justify-content: center;
 	z-index: 9999;
 	padding: 20px;
+	opacity: 0;
+	transition: opacity 0.3s ease;
 }
 
 .gallery-modal.open {
 	display: flex;
+	opacity: 1;
 }
 
 .gallery-modal img {
 	max-width: 90%;
 	max-height: 90%;
 	box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+	transform: scale(0.8);
+	transition: transform 0.3s ease;
+}
+
+.gallery-modal.open img {
+	transform: scale(1);
 }
 
 .gallery-modal .close-btn {
@@ -90,4 +99,10 @@
 	background: transparent;
 	border: none;
 	cursor: pointer;
+	opacity: 0;
+	transition: opacity 0.3s ease;
+}
+
+.gallery-modal.open .close-btn {
+	opacity: 1;
 }

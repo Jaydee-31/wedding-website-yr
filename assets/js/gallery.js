@@ -19,4 +19,39 @@ document.addEventListener("DOMContentLoaded", function () {
 	// Clone once to create a seamless loop
 	const copy = gallerySlide.cloneNode(true);
 	gallery.appendChild(copy);
+
+	// Modal logic
+	const modal = document.getElementById("galleryModal");
+	const modalImg = modal ? modal.querySelector("img") : null;
+	const closeBtn = modal ? modal.querySelector(".close-btn") : null;
+
+	function openModal(src, alt) {
+		if (!modal || !modalImg) return;
+		modalImg.src = src;
+		modalImg.alt = alt;
+		modal.classList.add("open");
+		modal.setAttribute("aria-hidden", "false");
+	}
+
+	function closeModal() {
+		if (!modal) return;
+		modal.classList.remove("open");
+		modal.setAttribute("aria-hidden", "true");
+	}
+
+	gallery.querySelectorAll("img").forEach((img) => {
+		img.addEventListener("click", () => openModal(img.src, img.alt));
+	});
+
+	if (closeBtn) {
+		closeBtn.addEventListener("click", closeModal);
+	}
+
+	if (modal) {
+		modal.addEventListener("click", (event) => {
+			if (event.target === modal) {
+				closeModal();
+			}
+		});
+	}
 });
