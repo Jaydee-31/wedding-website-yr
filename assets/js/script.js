@@ -17,50 +17,73 @@ document.addEventListener("DOMContentLoaded", function () {
 	const messagesDisplay = document.getElementById("messagesDisplay");
 
 	if (messageForm && messagesDisplay) {
-		// Load existing messages from localStorage
+		// Load existing messages from Firebase
 		loadMessages();
 
-		messageForm.addEventListener("submit", function (e) {
+		messageForm.addEventListener("submit", async function (e) {
 			e.preventDefault();
 			const formData = new FormData(messageForm);
 			const name = formData.get("name").trim();
 			const attendance = formData.get("attendance");
 			const greetings = formData.get("greetings").trim();
 
-			if (name && attendance && greetings) {
-				const message = {
-					name,
-					attendance,
-					greetings,
-					timestamp: Date.now(),
-				};
-
-				saveMessage(message);
-				displayMessage(message);
-				messageForm.reset();
+			if (name && attendance && greetings && window.firebaseDB && window.firebaseFunctions) {
+				try {
+					await window.firebaseFunctions.addDoc(window.firebaseFunctions.collection(window.firebaseDB, "messages"), {
+						name,
+						attendance,
+						greetings,
+						timestamp: new Date(),
+					});
+					messageForm.reset();
+					loadMessages(); // Reload to show new message
+				} catch (error) {
+					console.error("Error adding message: ", error);
+					alert("Failed to submit message. Please try again.");
+				}
 			}
 		});
 
-		function saveMessage(message) {
-			const messages = JSON.parse(localStorage.getItem("weddingMessages") || "[]");
-			messages.push(message);
-			localStorage.setItem("weddingMessages", JSON.stringify(messages));
-		}
-
-		function loadMessages() {
-			const messages = JSON.parse(localStorage.getItem("weddingMessages") || "[]");
-			messages.forEach(displayMessage);
+		async function loadMessages() {
+			if (!window.firebaseDB || !window.firebaseFunctions) return;
+			try {
+				const q = window.firebaseFunctions.query(window.firebaseFunctions.collection(window.firebaseDB, "messages"), window.firebaseFunctions.orderBy("timestamp", "desc"));
+				const querySnapshot = await window.firebaseFunctions.getDocs(q);
+				messagesDisplay.innerHTML = ""; // Clear current
+				querySnapshot.forEach((doc) => {
+					const message = doc.data();
+					displayMessage(message);
+				});
+			} catch (error) {
+				console.error("Error loading messages: ", error);
+			}
 		}
 
 		function displayMessage(message) {
 			const messageDiv = document.createElement("div");
 			messageDiv.className = "message-item";
+			const timeAgo = getTimeAgo(message.timestamp.toDate ? message.timestamp.toDate() : new Date(message.timestamp));
 			messageDiv.innerHTML = `
 				<h4>${message.name}</h4>
 				<p><strong>Attendance:</strong> ${message.attendance === "coming" ? "Coming" : "Not Coming"}</p>
 				<p><strong>Greetings:</strong> ${message.greetings}</p>
+				<p class="message-time">${timeAgo}</p>
 			`;
 			messagesDisplay.appendChild(messageDiv);
+		}
+
+		function getTimeAgo(date) {
+			const now = new Date();
+			const diffMs = now - date;
+			const diffSec = Math.floor(diffMs / 1000);
+			const diffMin = Math.floor(diffSec / 60);
+			const diffHour = Math.floor(diffMin / 60);
+			const diffDay = Math.floor(diffHour / 24);
+
+			if (diffSec < 60) return "Just now";
+			if (diffMin < 60) return `${diffMin} min ago`;
+			if (diffHour < 24) return `${diffHour} hour${diffHour > 1 ? "s" : ""} ago`;
+			return `${diffDay} day${diffDay > 1 ? "s" : ""} ago`;
 		}
 	}
 });
