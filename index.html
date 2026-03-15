@@ -275,6 +275,33 @@
 			<button class="rsvp-btn">RSVP</button>
 		</section>
 
+		<!-- Guest Messages Section -->
+		<section class="guest-messages">
+			<div class="container">
+				<div class="section-title">Leave a Message</div>
+				<form id="messageForm">
+					<div class="form-group">
+						<label for="name">Name:</label>
+						<input type="text" id="name" name="name" required />
+					</div>
+					<div class="form-group">
+						<label>Attendance:</label>
+						<div class="radio-group">
+							<label><input type="radio" name="attendance" value="coming" required /> Coming</label>
+							<label><input type="radio" name="attendance" value="not-coming" /> Not Coming</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="greetings">Greetings:</label>
+						<textarea id="greetings" name="greetings" rows="4" required></textarea>
+					</div>
+					<button type="submit" class="submit-btn">Submit</button>
+				</form>
+				<div id="messagesDisplay"></div>
+			</div>
+		</section>
+		<!-- End Guest Messages -->
+
 		<footer>
 			<p>With love, Ren & Yeng</p>
 			<audio autoplay loop>
