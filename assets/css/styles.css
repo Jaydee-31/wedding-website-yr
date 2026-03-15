@@ -1,0 +1,118 @@
+body {
+	margin: 0;
+	font-family: "Poppins", sans-serif;
+	background: #faf7f5;
+	color: #333;
+}
+
+.save-date-banner {
+	background: #000000;
+	color: white;
+	font-size: 18px;
+	font-weight: 500;
+	padding: 10px 0;
+	text-align: left;
+	margin: 0;
+	display: block;
+}
+
+header {
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	text-align: center;
+	background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("https://images.unsplash.com/photo-1522673607200-164d1b6ce486");
+	background-size: cover;
+	background-position: center;
+	color: white;
+}
+header h1 {
+	font-family: "Playfair Display", serif;
+	font-size: 64px;
+	margin: 0;
+}
+header p {
+	font-size: 20px;
+	margin-top: 10px;
+}
+section {
+	max-width: 1000px;
+	margin: auto;
+	padding: 80px 20px;
+	text-align: center;
+}
+.story {
+	background-color: #ffffff;
+	max-width: 100%;
+}
+.story .container {
+	max-width: 1000px;
+}
+.section-title {
+	font-family: "Playfair Display", serif;
+	font-size: 36px;
+	margin-bottom: 30px;
+}
+.story {
+	font-size: 18px;
+	line-height: 1.7;
+}
+.details {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	gap: 30px;
+}
+.card {
+	background: white;
+	padding: 30px;
+	border-radius: 12px;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+.rsvp-btn {
+	margin-top: 30px;
+	padding: 14px 30px;
+	border: none;
+	background: #c59d5f;
+	color: white;
+	font-size: 16px;
+	border-radius: 30px;
+	cursor: pointer;
+}
+footer {
+	background: #222;
+	color: #aaa;
+	padding: 30px;
+	text-align: center;
+}
+
+.dress-code-circles {
+	position: relative;
+	width: 300px;
+	height: 300px;
+	margin: 20px auto;
+}
+
+.circle {
+	position: absolute;
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+}
+
+.circle1 {
+	background-color: #8ac4f9; /* Powder blue */
+}
+
+.circle2 {
+	background-color: #94bddc; /* Dusty Blue */
+
+	left: calc(50% - 60px);
+}
+
+.circle3 {
+	background-color: #cce1f1; /* Skyblue */
+
+	left: calc(50% + 20px);
+}

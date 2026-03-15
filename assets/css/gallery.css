@@ -1,0 +1,56 @@
+/* Gallery */
+@keyframes slide {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-100%);
+	}
+}
+
+/* Ensure images stay on a single row inside the gallery */
+.gallery {
+	overflow: hidden;
+	padding: 20px 0;
+	white-space: nowrap;
+	position: relative;
+	background: white;
+	max-width: 100%;
+}
+@media (min-width: 992px) {
+	.gallery:before,
+	.gallery:after {
+		position: absolute;
+		top: 0;
+		width: 250px;
+		height: 100%;
+		content: "";
+		z-index: 2;
+	}
+
+	.gallery:before {
+		left: 0;
+		background: linear-gradient(to left, rgba(255, 255, 255, 0), white);
+	}
+
+	.gallery:after {
+		right: 0;
+		background: linear-gradient(to right, rgba(255, 255, 255, 0), white);
+	}
+}
+
+.gallery:hover .gallery-slide {
+	animation-play-state: paused;
+}
+
+.gallery-slide {
+	display: inline-block;
+	animation: 35s slide infinite linear;
+}
+
+.gallery-slide img {
+	width: 200px;
+	height: 200px;
+	object-fit: cover;
+	margin: 0 10px;
+}
