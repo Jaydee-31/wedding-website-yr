@@ -12,6 +12,29 @@ document.addEventListener("DOMContentLoaded", function () {
 		marquee.innerHTML = content;
 	}
 
+	// Welcome Modal
+	const welcomeModal = document.getElementById("welcomeModal");
+	const openInvitationBtn = document.getElementById("openInvitationBtn");
+
+	if (welcomeModal && openInvitationBtn) {
+		// Prevent scrolling initially
+		document.body.style.overflow = "hidden";
+
+		// Show modal on load
+		welcomeModal.style.display = "flex";
+
+		openInvitationBtn.addEventListener("click", function () {
+			welcomeModal.style.display = "none";
+			document.body.style.overflow = "auto";
+
+			// Play music
+			const audio = document.querySelector("audio");
+			if (audio) {
+				audio.play().catch((e) => console.log("Autoplay blocked:", e));
+			}
+		});
+	}
+
 	// Handle guest messages form
 	const messageForm = document.getElementById("messageForm");
 	const messagesDisplay = document.getElementById("messagesDisplay");
