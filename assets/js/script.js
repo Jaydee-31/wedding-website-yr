@@ -63,11 +63,13 @@ document.addEventListener("DOMContentLoaded", function () {
 			const messageDiv = document.createElement("div");
 			messageDiv.className = "message-item";
 			const timeAgo = getTimeAgo(message.timestamp.toDate ? message.timestamp.toDate() : new Date(message.timestamp));
+			const attendanceText = message.attendance === "coming" ? "will attend" : "can't attend";
 			messageDiv.innerHTML = `
-				<h4>${message.name}</h4>
-				<p><strong>Attendance:</strong> ${message.attendance === "coming" ? "Coming" : "Not Coming"}</p>
-				<p><strong>Greetings:</strong> ${message.greetings}</p>
-				<p class="message-time">${timeAgo}</p>
+				<div class="comment-header">
+					<strong>${message.name}</strong> <span class="attendance">${attendanceText}</span>
+                    <div class="comment-footer">${timeAgo}</div>
+				</div>
+				<div class="comment-body">${message.greetings}</div>
 			`;
 			messagesDisplay.appendChild(messageDiv);
 		}
