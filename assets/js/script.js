@@ -103,26 +103,125 @@ document.addEventListener("DOMContentLoaded", function () {
 				messagesDisplay.innerHTML = ""; // Clear current
 				querySnapshot.forEach((doc) => {
 					const message = doc.data();
-					displayMessage(message);
+					displayMessage(message, doc.id);
 				});
 			} catch (error) {
 				console.error("Error loading messages: ", error);
 			}
 		}
 
-		function displayMessage(message) {
+		// function displayMessage(message) {
+		// 	const messageDiv = document.createElement("div");
+		// 	messageDiv.className = "message-item";
+		// 	const timeAgo = getTimeAgo(message.timestamp.toDate ? message.timestamp.toDate() : new Date(message.timestamp));
+		// 	const attendanceText = message.attendance === "coming" ? "will attend" : "can't attend";
+		// 	messageDiv.innerHTML = `
+		// 		<div class="comment-header">
+		// 			<strong>${message.name}</strong> <span class="attendance">${attendanceText}</span>
+		//             <div class="comment-footer">${timeAgo}</div>
+		// 		</div>
+		// 		<div class="comment-body">${message.greetings}</div>
+		// 	`;
+		// 	messagesDisplay.appendChild(messageDiv);
+		// }
+
+		function displayMessage(message, id) {
 			const messageDiv = document.createElement("div");
 			messageDiv.className = "message-item";
+
 			const timeAgo = getTimeAgo(message.timestamp.toDate ? message.timestamp.toDate() : new Date(message.timestamp));
 			const attendanceText = message.attendance === "coming" ? "will attend" : "can't attend";
+
+			// Add delete button
 			messageDiv.innerHTML = `
-				<div class="comment-header">
-					<strong>${message.name}</strong> <span class="attendance">${attendanceText}</span>
-                    <div class="comment-footer">${timeAgo}</div>
-				</div>
-				<div class="comment-body">${message.greetings}</div>
-			`;
+        <div class="comment-header">
+            <strong>${message.name}</strong> <span class="attendance">${attendanceText}</span>
+            <div class="comment-time">${timeAgo}</div>
+        </div>
+        <div class="comment-body">${message.greetings}</div>
+		<dive class="comment-footer">
+        	<button class="btn btn-outline-danger btn-sm delete-btn" data-id="${id}"><i class="fa-solid fa-trash"></i> Delete</button>
+		</div>
+    `;
+
 			messagesDisplay.appendChild(messageDiv);
+
+			// Attach delete listener
+			const deleteBtn = messageDiv.querySelector(".delete-btn");
+			deleteBtn.addEventListener("click", async () => {
+				const result = await Swal.fire({
+					title: "Are you sure?",
+					text: "This message will be permanently deleted.",
+					icon: "warning",
+					showCancelButton: true,
+					confirmButtonText: '<i class="fa-solid fa-trash"></i> Delete',
+					cancelButtonText: "Cancel",
+				});
+
+				if (result.isConfirmed) {
+					try {
+						// Correct way to create DocumentReference
+						const docRef = window.firebaseFunctions.doc(window.firebaseDB, "messages", id);
+
+						// Delete the document
+						await window.firebaseFunctions.deleteDoc(docRef);
+
+						Swal.fire({
+							icon: "success",
+							title: "Deleted!",
+							text: "The message has been removed.",
+							timer: 1500,
+							showConfirmButton: false,
+						});
+
+						// Remove from UI
+						messageDiv.remove();
+					} catch (error) {
+						console.error("Error deleting message:", error);
+						Swal.fire({
+							icon: "error",
+							title: "Failed to delete",
+							text: "Please try again.",
+						});
+					}
+				}
+			});
+		}
+
+		async function deleteMessages(id) {
+			// Confirm deletion with SweetAlert2
+			const result = await Swal.fire({
+				title: "Are you sure?",
+				text: "This message will be permanently deleted.",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonText: '<i class="fa-solid fa-trash"></i> Delete',
+				cancelButtonText: "Cancel",
+			});
+
+			if (result.isConfirmed) {
+				try {
+					await window.firebaseFunctions.deleteDoc(window.firebaseFunctions.doc(window.firebaseDB, "messages", id));
+
+					Swal.fire({
+						icon: "success",
+						title: "Deleted!",
+						text: "The message has been removed.",
+						timer: 1500,
+						showConfirmButton: false,
+					});
+
+					// Reload messages
+					loadMessages();
+				} catch (error) {
+					console.error("Error deleting message:", error);
+					Swal.fire({
+						icon: "error",
+						title: "Failed to delete",
+						text: "Please try again.",
+					});
+				}
+			}
 		}
 
 		function getTimeAgo(date) {
