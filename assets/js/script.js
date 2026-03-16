@@ -87,7 +87,8 @@ document.addEventListener("DOMContentLoaded", function () {
 					icon: "success",
 					title: "Message Sent!",
 					text: `Thank you, ${name}!`,
-					confirmButtonText: "OK",
+					confirmButtonText: "Ok",
+					confirmButtonColor: "#3085d6",
 				});
 
 				messageForm.reset();
@@ -101,7 +102,8 @@ document.addEventListener("DOMContentLoaded", function () {
 					icon: "error",
 					title: "Failed to Send",
 					text: "Something went wrong. Please try again.",
-					confirmButtonText: "OK",
+					confirmButtonText: "Ok",
+					confirmButtonColor: "#ff0000",
 				});
 			}
 		});

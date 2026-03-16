@@ -154,22 +154,6 @@ footer {
 	margin-top: 20px;
 }
 
-.upload-btn {
-	padding: 14px 30px;
-	border: none;
-	background: #c59d5f;
-	color: white;
-	font-size: 16px;
-	border-radius: 30px;
-	cursor: pointer;
-	text-decoration: none;
-	transition: background 0.3s ease;
-}
-
-.upload-btn:hover {
-	background: #a67c4a;
-}
-
 .qr-code {
 	text-align: center;
 }
@@ -208,20 +192,6 @@ footer {
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	font-family: inherit;
-}
-
-.submit-btn {
-	padding: 12px 24px;
-	background: #c59d5f;
-	color: white;
-	border: none;
-	border-radius: 4px;
-	cursor: pointer;
-	font-size: 16px;
-}
-
-.submit-btn:hover {
-	background: #a67c4a;
 }
 
 #messagesDisplay {

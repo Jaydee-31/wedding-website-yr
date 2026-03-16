@@ -12,29 +12,8 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 		<link rel="stylesheet" href="/assets/css/styles.css" />
 		<link rel="stylesheet" href="/assets/css/gallery.css" />
-
 		<!-- Firebase SDK -->
-		<script type="module">
-			import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-			import { getFirestore, collection, addDoc, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
-
-			const firebaseConfig = {
-				apiKey: "AIzaSyBytVuTMsf9Ehg9i6gPjk2DsRe1RmBQJlM",
-				authDomain: "wedding-website-yr.firebaseapp.com",
-				projectId: "wedding-website-yr",
-				storageBucket: "wedding-website-yr.firebasestorage.app",
-				messagingSenderId: "753295915424",
-				appId: "1:753295915424:web:03c75b0e494001b53c8cc5",
-				measurementId: "G-3ZM6SCGY9Q",
-			};
-
-			// Initialize Firebase
-			const app = initializeApp(firebaseConfig);
-			const db = getFirestore(app);
-
-			window.firebaseDB = db;
-			window.firebaseFunctions = { collection, addDoc, getDocs, orderBy, query };
-		</script>
+		<script type="module" src="/assets/js/firebase.js"></script>
 	</head>
 	<body>
 		<marquee class="save-date-banner" direction="left">04.18.2026</marquee>
@@ -286,7 +265,7 @@
 				<div class="section-title">Share Your Photos</div>
 				<p>We'd love to see your photos from the wedding! Upload them to our shared Google Drive folder.</p>
 				<div class="share-photos">
-					<a href="https://drive.google.com/drive/folders/YOUR_FOLDER_ID?usp=sharing" target="_blank" class="upload-btn">Upload Photos</a>
+					<a href="https://drive.google.com/drive/folders/YOUR_FOLDER_ID?usp=sharing" target="_blank" class="btn btn-warning">Upload Photos</a>
 					<div class="qr-code">
 						<p>Or scan the QR code:</p>
 						<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://drive.google.com/drive/folders/YOUR_FOLDER_ID?usp=sharing" alt="QR Code for uploading photos" />
@@ -317,7 +296,7 @@
 						<label for="greetings">Greetings:</label>
 						<textarea id="greetings" name="greetings" rows="4" required></textarea>
 					</div>
-					<button type="submit" class="submit-btn">Send</button>
+					<button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane me-"></i>Send</button>
 				</form>
 				<div id="messagesDisplay"></div>
 			</div>
@@ -354,6 +333,7 @@
 						showConfirmButton: true,
 						allowOutsideClick: false,
 						confirmButtonText: '<i class="fa fa-envelope-open fa-bounce me-2"></i>Open Invitation',
+						confirmButtonColor: "#3085d6",
 					}).then((result) => {
 						if (result.isConfirmed) {
 							const audio = document.querySelector("audio");
