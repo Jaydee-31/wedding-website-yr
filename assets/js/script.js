@@ -45,27 +45,76 @@ document.addEventListener("DOMContentLoaded", function () {
 
 		messageForm.addEventListener("submit", async function (e) {
 			e.preventDefault();
+
 			const formData = new FormData(messageForm);
 			const name = formData.get("name").trim();
 			const attendance = formData.get("attendance");
 			const greetings = formData.get("greetings").trim();
 
-			if (name && attendance && greetings && window.firebaseDB && window.firebaseFunctions) {
-				try {
-					await window.firebaseFunctions.addDoc(window.firebaseFunctions.collection(window.firebaseDB, "messages"), {
-						name,
-						attendance,
-						greetings,
-						timestamp: new Date(),
-					});
-					messageForm.reset();
-					loadMessages(); // Reload to show new message
-				} catch (error) {
-					console.error("Error adding message: ", error);
-					alert("Failed to submit message. Please try again.");
-				}
+			// Check for required fields and Firebase objects
+			if (!name || !attendance || !greetings || !window.firebaseDB || !window.firebaseFunctions) {
+				Swal.fire({
+					icon: "error",
+					title: "Incomplete Form",
+					text: "Please fill in all fields before submitting.",
+					confirmButtonText: "OK",
+				});
+				return;
+			}
+
+			try {
+				// Show loading alert
+				Swal.fire({
+					title: "Sending...",
+					html: "Please wait while we submit your message.",
+					allowOutsideClick: false,
+					didOpen: () => {
+						Swal.showLoading();
+					},
+				});
+
+				// Add document to Firebase
+				await window.firebaseFunctions.addDoc(window.firebaseFunctions.collection(window.firebaseDB, "messages"), {
+					name,
+					attendance,
+					greetings,
+					timestamp: new Date(),
+				});
+
+				// Close loading and show success
+				Swal.close(); // close loading
+				Swal.fire({
+					icon: "success",
+					title: "Message Sent!",
+					text: `Thank you, ${name}!`,
+					confirmButtonText: "OK",
+				});
+
+				messageForm.reset();
+				loadMessages(); // Reload messages
+			} catch (error) {
+				console.error("Error adding message: ", error);
+
+				// Close loading and show error
+				Swal.close();
+				Swal.fire({
+					icon: "error",
+					title: "Failed to Send",
+					text: "Something went wrong. Please try again.",
+					confirmButtonText: "OK",
+				});
 			}
 		});
+
+		function showPopup() {
+			Swal.fire({
+				title: "Send Message?",
+				text: "Do you want to send this email?",
+				icon: "question",
+				showConfirmButton: true,
+				confirmButtonText: '<i class="fa-solid fa-paper-plane"></i> Send',
+			});
+		}
 
 		async function loadMessages() {
 			if (!window.firebaseDB || !window.firebaseFunctions) return;

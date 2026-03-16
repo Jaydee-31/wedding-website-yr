@@ -323,7 +323,7 @@
 			</div>
 		</section>
 		<!-- End Guest Messages -->
-		<button onclick="showPopup()">Open</button>
+
 		<footer>
 			<p>With love, Ren & Yeng</p>
 			<audio autoplay loop>
@@ -337,13 +337,6 @@
 			<img src="" alt="" />
 		</div>
 
-		<!-- Welcome Modal -->
-		<!-- <div id="welcomeModal" class="welcome-modal">
-			<div class="modal-content">
-				<h2>Welcome, you're invited!</h2>
-				<button id="openInvitationBtn"><i class="fa fa-envelope-open fa-bounce me-2"></i> Open Invitation</button>
-			</div>
-		</div> -->
 		<script>
 			window.onload = function () {
 				// 1. Get URL parameters
@@ -354,7 +347,7 @@
 				if (name || number) {
 					// 2. Show popup
 					Swal.fire({
-						title: "Welcome, you're invited!",
+						title: "You're invited!",
 						html: `<p>Hi <strong>${name}</strong>, join us on our wedding day.
 							We’ve reserved <strong>${number}</strong> seat(s) for you. </p>`,
 						icon: "success",
