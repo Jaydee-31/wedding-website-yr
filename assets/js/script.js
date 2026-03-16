@@ -3,13 +3,23 @@ document.addEventListener("DOMContentLoaded", function () {
 	const marquee = document.querySelector(".save-date-banner");
 	if (marquee) {
 		const text = "04. 18. 2026";
-		const repetitions = 40; // Repeat enough to cover wide screens
+		const repetitions = 40;
 		const separator = " &nbsp;&nbsp;&nbsp; ";
 		let content = "";
 		for (let i = 0; i < repetitions; i++) {
 			content += text + separator;
 		}
 		marquee.innerHTML = content;
+	}
+
+	// Check if user is admin
+	let isAdmin = false;
+	const adminPassword = "your-admin-password-here"; // Change this to your password
+
+	// Check if admin is already authenticated in session
+	const adminAuth = sessionStorage.getItem("isAdmin") === "true";
+	if (adminAuth) {
+		isAdmin = true;
 	}
 
 	// Handle guest messages form
@@ -28,7 +38,6 @@ document.addEventListener("DOMContentLoaded", function () {
 			const attendance = formData.get("attendance");
 			const greetings = formData.get("greetings").trim();
 
-			// Check for required fields and Firebase objects
 			if (!name || !attendance || !greetings || !window.firebaseDB || !window.firebaseFunctions) {
 				Swal.fire({
 					icon: "error",
@@ -40,7 +49,6 @@ document.addEventListener("DOMContentLoaded", function () {
 			}
 
 			try {
-				// Show loading alert
 				Swal.fire({
 					title: "Sending...",
 					html: "Please wait while we submit your message.",
@@ -50,7 +58,6 @@ document.addEventListener("DOMContentLoaded", function () {
 					},
 				});
 
-				// Add document to Firebase
 				await window.firebaseFunctions.addDoc(window.firebaseFunctions.collection(window.firebaseDB, "messages"), {
 					name,
 					attendance,
@@ -58,8 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
 					timestamp: new Date(),
 				});
 
-				// Close loading and show success
-				Swal.close(); // close loading
+				Swal.close();
 				Swal.fire({
 					icon: "success",
 					title: "Message Sent!",
@@ -69,11 +75,10 @@ document.addEventListener("DOMContentLoaded", function () {
 				});
 
 				messageForm.reset();
-				loadMessages(); // Reload messages
+				loadMessages();
 			} catch (error) {
 				console.error("Error adding message: ", error);
 
-				// Close loading and show error
 				Swal.close();
 				Swal.fire({
 					icon: "error",
@@ -85,22 +90,12 @@ document.addEventListener("DOMContentLoaded", function () {
 			}
 		});
 
-		function showPopup() {
-			Swal.fire({
-				title: "Send Message?",
-				text: "Do you want to send this email?",
-				icon: "question",
-				showConfirmButton: true,
-				confirmButtonText: '<i class="fa-solid fa-paper-plane"></i> Send',
-			});
-		}
-
 		async function loadMessages() {
 			if (!window.firebaseDB || !window.firebaseFunctions) return;
 			try {
 				const q = window.firebaseFunctions.query(window.firebaseFunctions.collection(window.firebaseDB, "messages"), window.firebaseFunctions.orderBy("timestamp", "desc"));
 				const querySnapshot = await window.firebaseFunctions.getDocs(q);
-				messagesDisplay.innerHTML = ""; // Clear current
+				messagesDisplay.innerHTML = "";
 				querySnapshot.forEach((doc) => {
 					const message = doc.data();
 					displayMessage(message, doc.id);
@@ -110,21 +105,6 @@ document.addEventListener("DOMContentLoaded", function () {
 			}
 		}
 
-		// function displayMessage(message) {
-		// 	const messageDiv = document.createElement("div");
-		// 	messageDiv.className = "message-item";
-		// 	const timeAgo = getTimeAgo(message.timestamp.toDate ? message.timestamp.toDate() : new Date(message.timestamp));
-		// 	const attendanceText = message.attendance === "coming" ? "will attend" : "can't attend";
-		// 	messageDiv.innerHTML = `
-		// 		<div class="comment-header">
-		// 			<strong>${message.name}</strong> <span class="attendance">${attendanceText}</span>
-		//             <div class="comment-footer">${timeAgo}</div>
-		// 		</div>
-		// 		<div class="comment-body">${message.greetings}</div>
-		// 	`;
-		// 	messagesDisplay.appendChild(messageDiv);
-		// }
-
 		function displayMessage(message, id) {
 			const messageDiv = document.createElement("div");
 			messageDiv.className = "message-item";
@@ -132,7 +112,9 @@ document.addEventListener("DOMContentLoaded", function () {
 			const timeAgo = getTimeAgo(message.timestamp.toDate ? message.timestamp.toDate() : new Date(message.timestamp));
 			const attendanceText = message.attendance === "coming" ? "will attend" : "can't attend";
 
-			// Add delete button
+			// Only show delete button if user is admin
+			const deleteButtonHTML = isAdmin ? `<button class="btn btn-outline-danger btn-sm delete-btn" data-id="${id}"><i class="fa-solid fa-trash"></i> Delete</button>` : "";
+
 			messageDiv.innerHTML = `
         <div class="comment-header">
             <strong>${message.name}</strong> <span class="attendance">${attendanceText}</span>
@@ -140,87 +122,51 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
         <div class="comment-body">${message.greetings}</div>
 		<dive class="comment-footer">
-        	<button class="btn btn-outline-danger btn-sm delete-btn" data-id="${id}"><i class="fa-solid fa-trash"></i> Delete</button>
+		${deleteButtonHTML}
+        	
 		</div>
+        
     `;
 
 			messagesDisplay.appendChild(messageDiv);
 
-			// Attach delete listener
-			const deleteBtn = messageDiv.querySelector(".delete-btn");
-			deleteBtn.addEventListener("click", async () => {
-				const result = await Swal.fire({
-					title: "Are you sure?",
-					text: "This message will be permanently deleted.",
-					icon: "warning",
-					showCancelButton: true,
-					confirmButtonText: '<i class="fa-solid fa-trash"></i> Delete',
-					cancelButtonText: "Cancel",
-				});
+			// Only attach delete listener if admin
+			if (isAdmin) {
+				const deleteBtn = messageDiv.querySelector(".delete-btn");
+				deleteBtn.addEventListener("click", async () => {
+					const result = await Swal.fire({
+						title: "Are you sure?",
+						text: "This message will be permanently deleted.",
+						icon: "warning",
+						showCancelButton: true,
+						confirmButtonText: '<i class="fa-solid fa-trash"></i> Delete',
+						cancelButtonText: "Cancel",
+					});
 
-				if (result.isConfirmed) {
-					try {
-						// Correct way to create DocumentReference
-						const docRef = window.firebaseFunctions.doc(window.firebaseDB, "messages", id);
+					if (result.isConfirmed) {
+						try {
+							const docRef = window.firebaseFunctions.doc(window.firebaseDB, "messages", id);
+							await window.firebaseFunctions.deleteDoc(docRef);
 
-						// Delete the document
-						await window.firebaseFunctions.deleteDoc(docRef);
+							Swal.fire({
+								icon: "success",
+								title: "Deleted!",
+								text: "The message has been removed.",
+								timer: 1500,
+								showConfirmButton: false,
+							});
 
-						Swal.fire({
-							icon: "success",
-							title: "Deleted!",
-							text: "The message has been removed.",
-							timer: 1500,
-							showConfirmButton: false,
-						});
-
-						// Remove from UI
-						messageDiv.remove();
-					} catch (error) {
-						console.error("Error deleting message:", error);
-						Swal.fire({
-							icon: "error",
-							title: "Failed to delete",
-							text: "Please try again.",
-						});
+							messageDiv.remove();
+						} catch (error) {
+							console.error("Error deleting message:", error);
+							Swal.fire({
+								icon: "error",
+								title: "Failed to delete",
+								text: "Please try again.",
+							});
+						}
 					}
-				}
-			});
-		}
-
-		async function deleteMessages(id) {
-			// Confirm deletion with SweetAlert2
-			const result = await Swal.fire({
-				title: "Are you sure?",
-				text: "This message will be permanently deleted.",
-				icon: "warning",
-				showCancelButton: true,
-				confirmButtonText: '<i class="fa-solid fa-trash"></i> Delete',
-				cancelButtonText: "Cancel",
-			});
-
-			if (result.isConfirmed) {
-				try {
-					await window.firebaseFunctions.deleteDoc(window.firebaseFunctions.doc(window.firebaseDB, "messages", id));
-
-					Swal.fire({
-						icon: "success",
-						title: "Deleted!",
-						text: "The message has been removed.",
-						timer: 1500,
-						showConfirmButton: false,
-					});
-
-					// Reload messages
-					loadMessages();
-				} catch (error) {
-					console.error("Error deleting message:", error);
-					Swal.fire({
-						icon: "error",
-						title: "Failed to delete",
-						text: "Please try again.",
-					});
-				}
+				});
 			}
 		}
 
@@ -237,5 +183,50 @@ document.addEventListener("DOMContentLoaded", function () {
 			if (diffHour < 24) return `${diffHour} hour${diffHour > 1 ? "s" : ""} ago`;
 			return `${diffDay} day${diffDay > 1 ? "s" : ""} ago`;
 		}
+
+		// Admin login function - call this from console or add to footer
+		window.adminLogin = function () {
+			Swal.fire({
+				title: "Admin Login",
+				input: "password",
+				inputLabel: "Enter admin password",
+				inputPlaceholder: "Enter password",
+				showCancelButton: true,
+				confirmButtonText: "Login",
+				inputValidator: (value) => {
+					if (!value) {
+						return "Please enter the password";
+					}
+					if (value === adminPassword) {
+						sessionStorage.setItem("isAdmin", "true");
+						isAdmin = true;
+						loadMessages(); // Reload to show delete buttons
+						Swal.fire({
+							icon: "success",
+							title: "Logged in!",
+							text: "You are now an admin.",
+							timer: 1500,
+							showConfirmButton: false,
+						});
+					} else {
+						return "Incorrect password";
+					}
+				},
+			});
+		};
+
+		// Admin logout function
+		window.adminLogout = function () {
+			sessionStorage.removeItem("isAdmin");
+			isAdmin = false;
+			loadMessages(); // Reload to hide delete buttons
+			Swal.fire({
+				icon: "info",
+				title: "Logged out",
+				text: "Admin mode disabled.",
+				timer: 1500,
+				showConfirmButton: false,
+			});
+		};
 	}
 });
