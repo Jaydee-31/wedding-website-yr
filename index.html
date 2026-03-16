@@ -323,7 +323,7 @@
 			</div>
 		</section>
 		<!-- End Guest Messages -->
-
+		<button onclick="showPopup()">Open</button>
 		<footer>
 			<p>With love, Ren & Yeng</p>
 			<audio autoplay loop>
@@ -338,14 +338,42 @@
 		</div>
 
 		<!-- Welcome Modal -->
-		<div id="welcomeModal" class="welcome-modal">
+		<!-- <div id="welcomeModal" class="welcome-modal">
 			<div class="modal-content">
 				<h2>Welcome, you're invited!</h2>
 				<button id="openInvitationBtn"><i class="fa fa-envelope-open fa-bounce me-2"></i> Open Invitation</button>
 			</div>
-		</div>
+		</div> -->
+		<script>
+			window.onload = function () {
+				// 1. Get URL parameters
+				const params = new URLSearchParams(window.location.search);
+				const name = params.get("name"); // default if not found
+				const number = params.get("num");
 
+				if (name || number) {
+					// 2. Show popup
+					Swal.fire({
+						title: "Welcome, you're invited!",
+						html: `<p>Hi <strong>${name}</strong>, join us on our wedding day.
+							We’ve reserved <strong>${number}</strong> seat(s) for you. </p>`,
+						icon: "success",
+						showConfirmButton: true,
+						allowOutsideClick: false,
+						confirmButtonText: '<i class="fa fa-envelope-open fa-bounce me-2"></i>Open Invitation',
+					}).then((result) => {
+						if (result.isConfirmed) {
+							const audio = document.querySelector("audio");
+							if (audio) {
+								audio.play().catch((e) => console.log("Autoplay blocked:", e));
+							}
+						}
+					});
+				}
+			};
+		</script>
 		<script src="assets/js/script.js"></script>
 		<script src="assets/js/gallery.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	</body>
 </html>
