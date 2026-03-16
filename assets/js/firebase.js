@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, orderBy, query } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, doc, deleteDoc, updateDoc, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
 const firebaseConfig = {
 	apiKey: "AIzaSyBytVuTMsf9Ehg9i6gPjk2DsRe1RmBQJlM",
@@ -16,4 +16,13 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 window.firebaseDB = db;
-window.firebaseFunctions = { collection, addDoc, getDocs, deleteDoc, doc, orderBy, query };
+window.firebaseFunctions = {
+	collection,
+	addDoc,
+	doc,
+	deleteDoc,
+	updateDoc, // Add this
+	query,
+	orderBy,
+	getDocs,
+};

@@ -48,6 +48,9 @@ document.addEventListener("DOMContentLoaded", function () {
 				return;
 			}
 
+			// Generate unique edit token
+			const editToken = Math.random().toString(36).substr(2, 9);
+
 			try {
 				Swal.fire({
 					title: "Sending...",
@@ -62,14 +65,20 @@ document.addEventListener("DOMContentLoaded", function () {
 					name,
 					attendance,
 					greetings,
+					editToken, // Store token in Firebase
 					timestamp: new Date(),
 				});
+
+				// Store token in local storage for editing
+				let userEditTokens = JSON.parse(localStorage.getItem("userEditTokens") || "[]");
+				userEditTokens.push(editToken);
+				localStorage.setItem("userEditTokens", JSON.stringify(userEditTokens));
 
 				Swal.close();
 				Swal.fire({
 					icon: "success",
 					title: "Message Sent!",
-					text: `Thank you, ${name}!`,
+					text: `Thank you, ${name}! You can edit this message later.`,
 					confirmButtonText: "Ok",
 					confirmButtonColor: "#3085d6",
 				});
@@ -112,7 +121,12 @@ document.addEventListener("DOMContentLoaded", function () {
 			const timeAgo = getTimeAgo(message.timestamp.toDate ? message.timestamp.toDate() : new Date(message.timestamp));
 			const attendanceText = message.attendance === "coming" ? "will attend" : "can't attend";
 
-			// Only show delete button if user is admin
+			// Get user's edit tokens from local storage
+			const userEditTokens = JSON.parse(localStorage.getItem("userEditTokens") || "[]");
+			const canEdit = userEditTokens.includes(message.editToken);
+
+			// Show edit button if user can edit this message
+			const editButtonHTML = canEdit ? `<button class="btn btn-outline-primary btn-sm edit-btn" data-id="${id}"><i class="fa-solid fa-edit"></i> Edit</button>` : "";
 			const deleteButtonHTML = isAdmin ? `<button class="btn btn-outline-danger btn-sm delete-btn" data-id="${id}"><i class="fa-solid fa-trash"></i> Delete</button>` : "";
 
 			messageDiv.innerHTML = `
@@ -121,14 +135,19 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="comment-time">${timeAgo}</div>
         </div>
         <div class="comment-body">${message.greetings}</div>
-		<dive class="comment-footer">
-		${deleteButtonHTML}
-        	
-		</div>
-        
+        <div class="comment-footer">
+            ${editButtonHTML}
+            ${deleteButtonHTML}
+        </div>
     `;
 
 			messagesDisplay.appendChild(messageDiv);
+
+			// Attach edit listener if user can edit
+			if (canEdit) {
+				const editBtn = messageDiv.querySelector(".edit-btn");
+				editBtn.addEventListener("click", () => editMessage(id, message));
+			}
 
 			// Only attach delete listener if admin
 			if (isAdmin) {
@@ -167,6 +186,62 @@ document.addEventListener("DOMContentLoaded", function () {
 						}
 					}
 				});
+			}
+		}
+
+		// Edit message function
+		async function editMessage(id, originalMessage) {
+			const { value: formValues } = await Swal.fire({
+				title: "Edit Your Message",
+				html: `
+                    <input id="edit-name" class="swal2-input" placeholder="Name" value="${originalMessage.name}">
+                    <select id="edit-attendance" class="swal2-input">
+                        <option value="coming" ${originalMessage.attendance === "coming" ? "selected" : ""}>Yes, I'll be there</option>
+                        <option value="not-coming" ${originalMessage.attendance === "not-coming" ? "selected" : ""}>Sorry, can't make it</option>
+                    </select>
+                    <textarea id="edit-greetings" class="swal2-textarea" placeholder="Greetings">${originalMessage.greetings}</textarea>
+                `,
+				focusConfirm: false,
+				showCancelButton: true,
+				confirmButtonText: "Update",
+				preConfirm: () => {
+					const name = document.getElementById("edit-name").value.trim();
+					const attendance = document.getElementById("edit-attendance").value;
+					const greetings = document.getElementById("edit-greetings").value.trim();
+					if (!name || !attendance || !greetings) {
+						Swal.showValidationMessage("Please fill in all fields");
+					}
+					return { name, attendance, greetings };
+				},
+			});
+
+			if (formValues) {
+				try {
+					const docRef = window.firebaseFunctions.doc(window.firebaseDB, "messages", id);
+					await window.firebaseFunctions.updateDoc(docRef, {
+						name: formValues.name,
+						attendance: formValues.attendance,
+						greetings: formValues.greetings,
+						timestamp: new Date(), // Update timestamp
+					});
+
+					Swal.fire({
+						icon: "success",
+						title: "Updated!",
+						text: "Your message has been updated.",
+						timer: 1500,
+						showConfirmButton: false,
+					});
+
+					loadMessages(); // Reload to show changes
+				} catch (error) {
+					console.error("Error updating message:", error);
+					Swal.fire({
+						icon: "error",
+						title: "Failed to update",
+						text: "Please try again.",
+					});
+				}
 			}
 		}
 
