@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	// Check if user is admin
 	let isAdmin = false;
-	const adminPassword = "your-admin-password-here"; // Change this to your password
+	const adminPassword = "admin041826"; // Change this to your password
 
 	// Check if admin is already authenticated in session
 	const adminAuth = sessionStorage.getItem("isAdmin") === "true";
@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			const canEdit = userEditTokens.includes(message.editToken);
 
 			// Show edit button if user can edit this message
-			const editButtonHTML = canEdit ? `<button class="btn btn-outline-primary btn-sm edit-btn" data-id="${id}"><i class="fa-solid fa-edit"></i> Edit</button>` : "";
+			const editButtonHTML = canEdit ? `<button class="btn btn-outline-primary btn-sm edit-btn me-2" data-id="${id}"><i class="fa-solid fa-edit"></i> Edit</button>` : "";
 			const deleteButtonHTML = isAdmin ? `<button class="btn btn-outline-danger btn-sm delete-btn" data-id="${id}"><i class="fa-solid fa-trash"></i> Delete</button>` : "";
 
 			messageDiv.innerHTML = `
@@ -194,16 +194,24 @@ document.addEventListener("DOMContentLoaded", function () {
 			const { value: formValues } = await Swal.fire({
 				title: "Edit Your Message",
 				html: `
-                    <input id="edit-name" class="swal2-input" placeholder="Name" value="${originalMessage.name}">
-                    <select id="edit-attendance" class="swal2-input">
-                        <option value="coming" ${originalMessage.attendance === "coming" ? "selected" : ""}>Yes, I'll be there</option>
-                        <option value="not-coming" ${originalMessage.attendance === "not-coming" ? "selected" : ""}>Sorry, can't make it</option>
-                    </select>
-                    <textarea id="edit-greetings" class="swal2-textarea" placeholder="Greetings">${originalMessage.greetings}</textarea>
-                `,
+				<form>
+					<div class="form-group">
+                    	<input id="edit-name" class=" form-control" placeholder="Name" value="${originalMessage.name}">
+					 </div>
+					 <div class="form-group">
+						<select id="edit-attendance" class=" form-control">
+							<option value="coming" ${originalMessage.attendance === "coming" ? "selected" : ""}>Yes, I'll be there</option>
+							<option value="not-coming" ${originalMessage.attendance === "not-coming" ? "selected" : ""}>Sorry, can't make it</option>
+						</select>
+					 </div>
+                    <textarea id="edit-greetings" class="form-control" placeholder="Greetings">${originalMessage.greetings}</textarea>
+               </form>
+			   
+				`,
 				focusConfirm: false,
 				showCancelButton: true,
 				confirmButtonText: "Update",
+				allowOutsideClick: false,
 				preConfirm: () => {
 					const name = document.getElementById("edit-name").value.trim();
 					const attendance = document.getElementById("edit-attendance").value;
