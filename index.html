@@ -20,7 +20,7 @@
 		<header>
 			<h1>Ren & Yeng</h1>
 			<p>We're Getting Married</p>
-			<p>Save the Date</p>
+			<p>Wednesday, 18 April 2026</p>
 		</header>
 
 		<section class="story">
@@ -352,6 +352,14 @@
 						allowOutsideClick: false,
 						confirmButtonText: '<i class="fa fa-envelope-open fa-bounce me-2"></i>Open Invitation',
 						confirmButtonColor: "#3085d6",
+						backdrop: "#ffffff",
+						showClass: {
+							popup: `
+								animate__animated
+								animate__fadeInDown
+								animate__faster
+								`,
+						},
 					}).then((result) => {
 						if (result.isConfirmed) {
 							playAudio();

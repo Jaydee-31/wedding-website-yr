@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		for (let i = 0; i < repetitions; i++) {
 			content += text + separator;
 		}
-		marquee.innerHTML = content;
+		marquee.innerHTML = `<span class="save-date-track">${content}</span>`;
 	}
 
 	// Check if user is admin
