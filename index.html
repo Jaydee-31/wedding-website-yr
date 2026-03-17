@@ -318,12 +318,30 @@
 
 		<script>
 			window.onload = function () {
+				const audio = document.querySelector("audio");
+
+				function playAudio() {
+					if (!audio) return;
+					audio.play().catch(() => {
+						const resumeOnFirstInteraction = () => {
+							audio.play().catch(() => {});
+							document.removeEventListener("click", resumeOnFirstInteraction);
+							document.removeEventListener("touchstart", resumeOnFirstInteraction);
+							document.removeEventListener("keydown", resumeOnFirstInteraction);
+						};
+
+						document.addEventListener("click", resumeOnFirstInteraction);
+						document.addEventListener("touchstart", resumeOnFirstInteraction);
+						document.addEventListener("keydown", resumeOnFirstInteraction);
+					});
+				}
+
 				// 1. Get URL parameters
 				const params = new URLSearchParams(window.location.search);
 				const name = params.get("name"); // default if not found
 				const number = params.get("num");
 
-				if (name || number) {
+				if (name && number) {
 					// 2. Show popup
 					Swal.fire({
 						title: "You're invited!",
@@ -336,12 +354,11 @@
 						confirmButtonColor: "#3085d6",
 					}).then((result) => {
 						if (result.isConfirmed) {
-							const audio = document.querySelector("audio");
-							if (audio) {
-								audio.play().catch((e) => console.log("Autoplay blocked:", e));
-							}
+							playAudio();
 						}
 					});
+				} else {
+					playAudio();
 				}
 			};
 		</script>
