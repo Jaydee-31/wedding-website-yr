@@ -121,13 +121,22 @@ document.addEventListener("DOMContentLoaded", function () {
 			const timeAgo = getTimeAgo(message.timestamp.toDate ? message.timestamp.toDate() : new Date(message.timestamp));
 			const attendanceText = message.attendance === "coming" ? "will attend" : "can't attend";
 
-			// Get user's edit tokens from local storage
 			const userEditTokens = JSON.parse(localStorage.getItem("userEditTokens") || "[]");
 			const canEdit = userEditTokens.includes(message.editToken);
 
-			// Show edit button if user can edit this message
+			const likedIds = getLikedMessageIds();
+			const isLiked = likedIds.includes(id);
+			const likesCount = Number(message.likes || 0);
+
 			const editButtonHTML = canEdit ? `<button class="btn btn-outline-primary btn-sm edit-btn me-2" data-id="${id}"><i class="fa-solid fa-edit"></i> Edit</button>` : "";
 			const deleteButtonHTML = isAdmin ? `<button class="btn btn-outline-danger btn-sm delete-btn" data-id="${id}"><i class="fa-solid fa-trash"></i> Delete</button>` : "";
+
+			const likeButtonHTML = `
+        <button class="btn btn-sm like-btn ${isLiked ? "btn-danger" : "btn-outline-danger"}" data-id="${id}">
+            <i class="fa-${isLiked ? "solid" : "regular"} fa-heart"></i>
+            <span class="like-count ">${likesCount}</span>
+        </button>
+    `;
 
 			messageDiv.innerHTML = `
         <div class="comment-header">
@@ -136,12 +145,47 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
         <div class="comment-body">${message.greetings}</div>
         <div class="comment-footer">
-            ${editButtonHTML}
-            ${deleteButtonHTML}
+			<div class="footer-left">
+				${editButtonHTML}
+				${deleteButtonHTML}
+			</div>
+			<div class="footer-right">
+				${likeButtonHTML}
+			</div>
         </div>
     `;
 
 			messagesDisplay.appendChild(messageDiv);
+
+			const likeBtn = messageDiv.querySelector(".like-btn");
+			likeBtn.addEventListener("click", async () => {
+				if (!window.firebaseDB || !window.firebaseFunctions) return;
+				likeBtn.disabled = true;
+
+				try {
+					const liked = getLikedMessageIds();
+					const alreadyLiked = liked.includes(id);
+					const delta = alreadyLiked ? -1 : 1;
+
+					const docRef = window.firebaseFunctions.doc(window.firebaseDB, "messages", id);
+					await window.firebaseFunctions.updateDoc(docRef, {
+						likes: window.firebaseFunctions.increment(delta),
+					});
+
+					if (alreadyLiked) {
+						setLikedMessageIds(liked.filter((x) => x !== id));
+					} else {
+						liked.push(id);
+						setLikedMessageIds(liked);
+					}
+
+					await loadMessages();
+				} catch (error) {
+					console.error("Error updating like:", error);
+				} finally {
+					likeBtn.disabled = false;
+				}
+			});
 
 			// Attach edit listener if user can edit
 			if (canEdit) {
@@ -311,5 +355,13 @@ document.addEventListener("DOMContentLoaded", function () {
 				showConfirmButton: false,
 			});
 		};
+
+		function getLikedMessageIds() {
+			return JSON.parse(localStorage.getItem("likedMessageIds") || "[]");
+		}
+
+		function setLikedMessageIds(ids) {
+			localStorage.setItem("likedMessageIds", JSON.stringify(ids));
+		}
 	}
 });
