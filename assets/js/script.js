@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				Swal.fire({
 					icon: "success",
 					title: "Message Sent!",
-					text: `Thank you, ${name}! You can edit this message later.`,
+					text: `Thank you, ${name}!`,
 					confirmButtonText: "Ok",
 					confirmButtonColor: "#3085d6",
 				});
@@ -119,7 +119,9 @@ document.addEventListener("DOMContentLoaded", function () {
 			messageDiv.className = "message-item";
 
 			const timeAgo = getTimeAgo(message.timestamp.toDate ? message.timestamp.toDate() : new Date(message.timestamp));
-			const attendanceText = message.attendance === "coming" ? "will attend" : "can't attend";
+			const isAttending = message.attendance === "coming";
+			const attendanceText = isAttending ? "will attend" : "can't attend";
+			const attendanceDotClass = isAttending ? "is-attending" : "is-not-attending";
 
 			const userEditTokens = JSON.parse(localStorage.getItem("userEditTokens") || "[]");
 			const canEdit = userEditTokens.includes(message.editToken);
@@ -128,8 +130,8 @@ document.addEventListener("DOMContentLoaded", function () {
 			const isLiked = likedIds.includes(id);
 			const likesCount = Number(message.likes || 0);
 
-			const editButtonHTML = canEdit ? `<button class="btn btn-outline-primary btn-sm edit-btn me-2" data-id="${id}"><i class="fa-solid fa-edit"></i> Edit</button>` : "";
-			const deleteButtonHTML = isAdmin ? `<button class="btn btn-outline-danger btn-sm delete-btn" data-id="${id}"><i class="fa-solid fa-trash"></i> Delete</button>` : "";
+			const editButtonHTML = canEdit ? `<button class="btn-sm edit-btn me-2" data-id="${id}"><i class="fa-solid fa-edit"></i></button>` : "";
+			const deleteButtonHTML = isAdmin ? `<button class="btn-sm delete-btn" data-id="${id}"><i class="fa-solid fa-trash"></i></button>` : "";
 
 			const likeButtonHTML = `
         <button class="btn btn-sm like-btn ${isLiked ? "btn-danger" : "btn-outline-danger"}" data-id="${id}">
@@ -140,7 +142,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 			messageDiv.innerHTML = `
         <div class="comment-header">
-            <strong>${message.name}</strong> <span class="attendance">${attendanceText}</span>
+			<strong title="${attendanceText}">${message.name}</strong>
+			<span class="attendance">
+				<span class="attendance-dot ${attendanceDotClass}" title="${attendanceText}" aria-label="${attendanceText}"></span>
+			</span>
             <div class="comment-time">${timeAgo}</div>
         </div>
         <div class="comment-body">${message.greetings}</div>
@@ -304,11 +309,15 @@ document.addEventListener("DOMContentLoaded", function () {
 			const diffMin = Math.floor(diffSec / 60);
 			const diffHour = Math.floor(diffMin / 60);
 			const diffDay = Math.floor(diffHour / 24);
+			const diffWeek = Math.floor(diffDay / 7);
+			const diffMonth = Math.floor(diffDay / 30);
 
-			if (diffSec < 60) return "Just now";
-			if (diffMin < 60) return `${diffMin} min ago`;
-			if (diffHour < 24) return `${diffHour} hour${diffHour > 1 ? "s" : ""} ago`;
-			return `${diffDay} day${diffDay > 1 ? "s" : ""} ago`;
+			if (diffSec < 60) return "now";
+			if (diffMin < 60) return `${diffMin}m`;
+			if (diffHour < 24) return `${diffHour}h`;
+			if (diffDay < 7) return `${diffDay}d`;
+			if (diffWeek < 4) return `${diffWeek}w`;
+			return `${diffMonth}mo`;
 		}
 
 		// Admin login function - call this from console or add to footer
