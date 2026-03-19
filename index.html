@@ -4,8 +4,10 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Ren & Yeng Wedding</title>
-		<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
 
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Style+Script&display=swap" rel="stylesheet" />
 		<!-- Bootstrap CSS -->
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
 		<!-- Font Awesome -->
@@ -28,23 +30,22 @@
 				<div class="section-title">Our Story</div>
 				<p class="story">Two hearts, one beautiful journey. Yeng and Ren met, became best friends, and discovered a love that continues to grow stronger every day. Now they invite you to celebrate the beginning of their forever together.</p>
 			</div>
+			<div class="gallery">
+				<div class="gallery-slide"></div>
+			</div>
 		</section>
-
-		<!-- Gallery Section -->
-		<section class="gallery">
-			<div class="gallery-slide"></div>
-		</section>
-		<!-- End Gallery -->
 
 		<!-- ======= Attire Section ======= -->
-		<section>
-			<div class="section-title">Attire</div>
-			<p><strong>Formal/ Semi-Formal</strong></p>
-			<p>We’d like to see you in these shades: <br />Powder blue/Dusty Blue/Skyblue</p>
-			<div class="dress-code-circles">
-				<div class="circle circle1"></div>
-				<div class="circle circle2"></div>
-				<div class="circle circle3"></div>
+		<section class="attire">
+			<div class="container">
+				<div class="section-title">Attire</div>
+				<p><strong>Formal/ Semi-Formal</strong></p>
+				<p>We’d like to see you in these shades: <br />Powder blue/Dusty Blue/Skyblue</p>
+				<div class="dress-code-circles">
+					<div class="circle circle1"></div>
+					<div class="circle circle2"></div>
+					<div class="circle circle3"></div>
+				</div>
 			</div>
 		</section>
 
@@ -75,184 +76,186 @@
 		<!-- End Attire Section -->
 
 		<!-- ======= Entourage Section ======= -->
-		<section>
-			<div class="section-title">The Entourage</div>
-			<div class="row parents">
-				<div class="col-md-6">
+		<section class="entourage">
+			<div class="container">
+				<div class="section-title">The Entourage</div>
+				<div class="row parents">
+					<div class="col-md-6">
+						<div class="card-body">
+							<h5 class="card-title">Parents of the Groom</h5>
+							<p>Floro T. Carreon Sr.</p>
+							<p>Rosalina A. Carreon</p>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="card-body">
+							<h5 class="card-title">Parents of the Bride</h5>
+							<p>Renato C. Mabolo</p>
+							<p>Pacita C. Mabolo</p>
+						</div>
+					</div>
+				</div>
+				<div class="row sponsors">
+					<h5 class="card-title primary">Principal Sponsors</h5>
+					<div class="col-md-6">
+						<div class="card-body left-sponsors">
+							<p>Dr. Alan P. Dargantes</p>
+							<p>Mr. Allan F. Gerongco</p>
+							<p>Dr. Chris Rey M. Lituañas</p>
+							<p>Mr. Claudio E. Ragmac</p>
+							<p>Mr. Edilberto C. Carbon</p>
+							<p>Dr. Emmanuel P. Leaño</p>
+							<p>Mr. Estrello A. Jimeno</p>
+							<p>Mr. Jesus C. Mabolo</p>
+							<p>Mr. Jonie Iyana</p>
+							<p>Mr. Joselito A. Canete</p>
+							<p>Mr. Juan D. Guzman</p>
+							<p>Mr. Mattias Villanueva</p>
+							<p>Mr. Nestor A. Flores</p>
+							<p>Engr. Nonito G. Castañares</p>
+							<p>Mr. Pedro T. Ricablanca</p>
+							<p>Mr. Renante A. Alpas</p>
+							<p>Mr. Richard C. Canunayon</p>
+							<p>Hon. Romelo P. Evangelio</p>
+							<p>Mr. Romeo O. Tulag</p>
+							<p>Mr. Romulo S. Tanuron</p>
+							<p>Pstr. Romulo C. Peñero</p>
+							<p>Engr. Vincent P. Gamos</p>
+							<p>Mrs. Agustina A. Gerongco</p>
+							<p>Dr. Alma B. Mohagan</p>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="card-body right-sponsors">
+							<p>Mrs. Analyn B. Iyana</p>
+							<p>Mrs. Beatriz C. Guzman</p>
+							<p>Mrs. Catherine T. Evangelio</p>
+							<p>Mrs. Chrystel T. Tunog</p>
+							<p>Mrs. Critchen T. Datuin</p>
+							<p>Mrs. Dominica C. Tanuron</p>
+							<p>Mrs. Emelinda T. Peñero</p>
+							<p>Mrs. Erenia C. Tulag</p>
+							<p>Mrs. Enrika M. Flores</p>
+							<p>Dr. Glenda Z. Doblas</p>
+							<p>Mrs. Guadalupe O. Blanco</p>
+							<p>Mrs. Hannah P. Lumista</p>
+							<p>Dr. Joliesa Mae S. Toledo</p>
+							<p>Mrs. Josefina R. Alpas</p>
+							<p>Mrs. Juvy V. Cañete</p>
+							<p>Mrs. Mae Cecille June M. Domingo</p>
+							<p>Dr. Maria Melanie M. Guiang</p>
+							<p>Mrs. Ma. Teresita C. Carreon</p>
+							<p>Mrs. Marissa A. Ricablanca</p>
+							<p>Dr. Meraluna G. Canunayon</p>
+							<p>Dr. Merced G. Melencion</p>
+							<p>Mrs. Michelle L. Jimeno</p>
+							<p>Dr. Reggie Y. Dela Cruz</p>
+							<p>Mrs. Teofila B. Ragmac</p>
+						</div>
+					</div>
+				</div>
+				<div class="row parents">
+					<h5 class="card-title secondary">Secondary Sponsors</h5>
+					<div class="col-md-6">
+						<div class="card-body">
+							<h5 class="card-title">Bestman</h5>
+							<p>John Michael M. Flores</p>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="card-body">
+							<h5 class="card-title">Maid of Honor</h5>
+							<p>Pamela N. Pajares</p>
+						</div>
+					</div>
+				</div>
+				<div class="row sponsors">
+					<div class="col-md-6">
+						<div class="card-body">
+							<h5 class="card-title">Groomsmen</h5>
+							<p>Engr. Felzen M. Balinas</p>
+							<p>Mr. Ceejay D. Membreve</p>
+							<p>Engr. Khevin B. Mendoza</p>
+							<p>Engr. Erwin Jones C. Beseos</p>
+							<p>Mr. Ike Victon R. Amper</p>
+							<p>Mr. Brylle Henson F. Luna</p>
+							<p>Mr. Reco C. Mabolo</p>
+							<p>2/O Ariel L. Apor</p>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="card-body">
+							<h5 class="card-title">Bridesmaids</h5>
+							<p>Ms. Melody A. Dequiña</p>
+							<p>Engr. Nechelle A. Nurab</p>
+							<p>Ms. Dary Jane C. Tabamo</p>
+							<p>Ms. Develin O. Omayan</p>
+							<p>Ms. Kristina Casandra L. Pava</p>
+							<p>Ms. Cindy Love A. Cagas</p>
+							<p>Ms. Rachelle M. Sulatan</p>
+							<p>Dr. Michelle S. Suelo</p>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<div class="card-body">
+							<h5 class="card-title">Flower Girls</h5>
+							<p>Tamara Danielle C. Cortez</p>
+							<p>K Zyannah Alexei Magdato</p>
+							<p>Roenn Gabrielle C. Puracan</p>
+							<p>K Zacchea Alexielle C. Magdato</p>
+						</div>
+					</div>
+				</div>
+				<div class="row bearers">
 					<div class="card-body">
-						<h5 class="card-title">Parents of the Groom</h5>
-						<p>Floro T. Carreon Sr.</p>
-						<p>Rosalina A. Carreon</p>
+						<h5 class="card-title">Banner Bearers</h5>
+						<p>Rubeline D. Mabolo</p>
+						<p>Asher T. Mabolo</p>
 					</div>
 				</div>
-				<div class="col-md-6">
-					<div class="card-body">
-						<h5 class="card-title">Parents of the Bride</h5>
-						<p>Renato C. Mabolo</p>
-						<p>Pacita C. Mabolo</p>
+				<div class="row bearers">
+					<div class="col-md-4">
+						<div class="card-body">
+							<h5 class="card-title">Ring Bearer</h5>
+							<p>Jzeush Nathaniel P. Carreon</p>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="card-body">
+							<h5 class="card-title">Coin Bearer</h5>
+							<p>Revee Skhyden R. Carreon</p>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="card-body">
+							<h5 class="card-title">Bible Bearer</h5>
+							<p>Allan Ezekiel T. Mabolo</p>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="row sponsors">
-				<h5 class="card-title primary">Principal Sponsors</h5>
-				<div class="col-md-6">
-					<div class="card-body left-sponsors">
-						<p>Dr. Alan P. Dargantes</p>
-						<p>Mr. Allan F. Gerongco</p>
-						<p>Dr. Chris Rey M. Lituañas</p>
-						<p>Mr. Claudio E. Ragmac</p>
-						<p>Mr. Edilberto C. Carbon</p>
-						<p>Dr. Emmanuel P. Leaño</p>
-						<p>Mr. Estrello A. Jimeno</p>
-						<p>Mr. Jesus C. Mabolo</p>
-						<p>Mr. Jonie Iyana</p>
-						<p>Mr. Joselito A. Canete</p>
-						<p>Mr. Juan D. Guzman</p>
-						<p>Mr. Mattias Villanueva</p>
-						<p>Mr. Nestor A. Flores</p>
-						<p>Engr. Nonito G. Castañares</p>
-						<p>Mr. Pedro T. Ricablanca</p>
-						<p>Mr. Renante A. Alpas</p>
-						<p>Mr. Richard C. Canunayon</p>
-						<p>Hon. Romelo P. Evangelio</p>
-						<p>Mr. Romeo O. Tulag</p>
-						<p>Mr. Romulo S. Tanuron</p>
-						<p>Pstr. Romulo C. Peñero</p>
-						<p>Engr. Vincent P. Gamos</p>
-						<p>Mrs. Agustina A. Gerongco</p>
-						<p>Dr. Alma B. Mohagan</p>
+				<div class="row parents">
+					<div class="col-md-4">
+						<div class="card-body">
+							<h5 class="card-title">To Veil Us in Unity</h5>
+							<p>Engr. Juliver A. Carreon</p>
+							<p>Mrs. Bethel R. Carreon</p>
+						</div>
 					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="card-body right-sponsors">
-						<p>Mrs. Analyn B. Iyana</p>
-						<p>Mrs. Beatriz C. Guzman</p>
-						<p>Mrs. Catherine T. Evangelio</p>
-						<p>Mrs. Chrystel T. Tunog</p>
-						<p>Mrs. Critchen T. Datuin</p>
-						<p>Mrs. Dominica C. Tanuron</p>
-						<p>Mrs. Emelinda T. Peñero</p>
-						<p>Mrs. Erenia C. Tulag</p>
-						<p>Mrs. Enrika M. Flores</p>
-						<p>Dr. Glenda Z. Doblas</p>
-						<p>Mrs. Guadalupe O. Blanco</p>
-						<p>Mrs. Hannah P. Lumista</p>
-						<p>Dr. Joliesa Mae S. Toledo</p>
-						<p>Mrs. Josefina R. Alpas</p>
-						<p>Mrs. Juvy V. Cañete</p>
-						<p>Mrs. Mae Cecille June M. Domingo</p>
-						<p>Dr. Maria Melanie M. Guiang</p>
-						<p>Mrs. Ma. Teresita C. Carreon</p>
-						<p>Mrs. Marissa A. Ricablanca</p>
-						<p>Dr. Meraluna G. Canunayon</p>
-						<p>Dr. Merced G. Melencion</p>
-						<p>Mrs. Michelle L. Jimeno</p>
-						<p>Dr. Reggie Y. Dela Cruz</p>
-						<p>Mrs. Teofila B. Ragmac</p>
+					<div class="col-md-4">
+						<div class="card-body">
+							<h5 class="card-title">To Light our Path</h5>
+							<p>Mr. Raul A. Magdato, Jr.</p>
+							<p>Mrs. Gerlie Rose C. Magdato</p>
+						</div>
 					</div>
-				</div>
-			</div>
-			<div class="row parents">
-				<h5 class="card-title secondary">Secondary Sponsors</h5>
-				<div class="col-md-6">
-					<div class="card-body">
-						<h5 class="card-title">Bestman</h5>
-						<p>John Michael M. Flores</p>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="card-body">
-						<h5 class="card-title">Maid of Honor</h5>
-						<p>Pamela N. Pajares</p>
-					</div>
-				</div>
-			</div>
-			<div class="row sponsors">
-				<div class="col-md-6">
-					<div class="card-body">
-						<h5 class="card-title">Groomsmen</h5>
-						<p>Engr. Felzen M. Balinas</p>
-						<p>Mr. Ceejay D. Membreve</p>
-						<p>Engr. Khevin B. Mendoza</p>
-						<p>Engr. Erwin Jones C. Beseos</p>
-						<p>Mr. Ike Victon R. Amper</p>
-						<p>Mr. Brylle Henson F. Luna</p>
-						<p>Mr. Reco C. Mabolo</p>
-						<p>2/O Ariel L. Apor</p>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="card-body">
-						<h5 class="card-title">Bridesmaids</h5>
-						<p>Ms. Melody A. Dequiña</p>
-						<p>Engr. Nechelle A. Nurab</p>
-						<p>Ms. Dary Jane C. Tabamo</p>
-						<p>Ms. Develin O. Omayan</p>
-						<p>Ms. Kristina Casandra L. Pava</p>
-						<p>Ms. Cindy Love A. Cagas</p>
-						<p>Ms. Rachelle M. Sulatan</p>
-						<p>Dr. Michelle S. Suelo</p>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col">
-					<div class="card-body">
-						<h5 class="card-title">Flower Girls</h5>
-						<p>Tamara Danielle C. Cortez</p>
-						<p>K Zyannah Alexei Magdato</p>
-						<p>Roenn Gabrielle C. Puracan</p>
-						<p>K Zacchea Alexielle C. Magdato</p>
-					</div>
-				</div>
-			</div>
-			<div class="row bearers">
-				<div class="card-body">
-					<h5 class="card-title">Banner Bearers</h5>
-					<p>Rubeline D. Mabolo</p>
-					<p>Asher T. Mabolo</p>
-				</div>
-			</div>
-			<div class="row bearers">
-				<div class="col-md-4">
-					<div class="card-body">
-						<h5 class="card-title">Ring Bearer</h5>
-						<p>Jzeush Nathaniel P. Carreon</p>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="card-body">
-						<h5 class="card-title">Coin Bearer</h5>
-						<p>Revee Skhyden R. Carreon</p>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="card-body">
-						<h5 class="card-title">Bible Bearer</h5>
-						<p>Allan Ezekiel T. Mabolo</p>
-					</div>
-				</div>
-			</div>
-			<div class="row parents">
-				<div class="col-md-4">
-					<div class="card-body">
-						<h5 class="card-title">To Veil Us in Unity</h5>
-						<p>Engr. Juliver A. Carreon</p>
-						<p>Mrs. Bethel R. Carreon</p>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="card-body">
-						<h5 class="card-title">To Light our Path</h5>
-						<p>Mr. Raul A. Magdato, Jr.</p>
-						<p>Mrs. Gerlie Rose C. Magdato</p>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="card-body">
-						<h5 class="card-title">To Cord Us One</h5>
-						<p>Mr. Robert P. Puracan</p>
-						<p>Mrs. Nenflor C. Puracan</p>
+					<div class="col-md-4">
+						<div class="card-body">
+							<h5 class="card-title">To Cord Us One</h5>
+							<p>Mr. Robert P. Puracan</p>
+							<p>Mrs. Nenflor C. Puracan</p>
+						</div>
 					</div>
 				</div>
 			</div>
