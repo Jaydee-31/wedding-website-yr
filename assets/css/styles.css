@@ -88,6 +88,9 @@ header p {
 	font-size: 48pt;
 	margin-bottom: 30px;
 }
+.section-description {
+	margin-bottom: 40px;
+}
 .story {
 	font-size: 18px;
 	line-height: 1.7;
@@ -123,6 +126,12 @@ header p {
 .primary,
 .secondary {
 	padding: 1rem 0 0 0;
+	font-family:
+		Style Script,
+		cursive;
+	font-weight: 400;
+	font-style: normal;
+	font-size: 28pt;
 }
 @media (max-width: 800px) {
 	.left-sponsors {
