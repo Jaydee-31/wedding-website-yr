@@ -50,8 +50,8 @@ header {
 	flex-direction: column;
 	text-align: center;
 	background:
-		linear-gradient(rgba(52, 163, 255, 0.605), rgba(0, 0, 0, 0.3)),
-		url("../img/gallery/IMG_0060.JPG") no-repeat;
+		linear-gradient(rgba(83, 178, 255, 0.605), rgba(0, 0, 0, 0.3)),
+		url("../img/gallery/IMG_9842.JPG") no-repeat;
 	background-size: cover;
 	background-position: center;
 	color: white;
@@ -64,12 +64,44 @@ header h1 {
 	font-family: "Style Script", cursive;
 	font-weight: 400;
 	font-style: normal;
-	font-size: 64pt;
+	font-size: 82pt;
 	margin: 0;
 }
 header p {
 	font-size: 20px;
 	margin-top: 10px;
+}
+.countdown {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-top: 20px;
+}
+.countdown-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	min-width: 70px;
+}
+.countdown-value {
+	font-size: 54px;
+	font-weight: 700;
+	line-height: 1;
+	color: #ffffff;
+	text-shadow: 0 2px 6px rgba(0, 0, 0, 0.156);
+}
+.countdown-label {
+	font-size: 11px;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.85);
+	margin-top: 4px;
+}
+.countdown-separator {
+	font-size: 36px;
+	font-weight: 700;
+	color: rgba(255, 255, 255, 0.75);
+	padding-bottom: 18px;
 }
 .monogram img {
 	width: 160px;
