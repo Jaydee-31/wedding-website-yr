@@ -1,5 +1,5 @@
 body {
-	padding-bottom: 110px;
+	background-color: black;
 }
 
 .bottom-dock {
@@ -72,10 +72,6 @@ body {
 }
 
 @media (max-width: 640px) {
-	body {
-		padding-bottom: 104px;
-	}
-
 	.bottom-dock {
 		bottom: 12px;
 		width: min(calc(100vw - 16px), 100%);

@@ -396,11 +396,91 @@ header p {
 		padding: 0 0 1rem 0;
 	}
 }
-footer {
-	background: #222;
-	color: #aaa;
-	padding: 30px;
+.site-footer {
+	background:
+		linear-gradient(180deg, #1f2830 0%, #161c22 100%),
+		url("../img/gallery/7.JPG") center/cover no-repeat;
+	background-blend-mode: multiply;
+	color: rgba(245, 249, 252, 0.9);
+	padding: 48px 0 26px;
+	margin-bottom: 92px;
+}
+
+.site-footer__inner {
+	display: grid;
+	grid-template-columns: 1.2fr 1fr 1fr;
+	gap: 28px;
+	text-align: left;
+}
+
+.site-footer h4,
+.site-footer h5 {
+	margin: 0 0 10px;
+	color: #ffffff;
+	line-height: 1.2;
+}
+
+.site-footer h4 {
+	font-family: "Style Script", cursive;
+	font-size: 40px;
+	font-weight: 400;
+}
+
+.site-footer h5 {
+	font-size: 14px;
+	text-transform: uppercase;
+	letter-spacing: 1.5px;
+	font-weight: 600;
+	color: rgba(220, 236, 247, 0.92);
+}
+
+.site-footer__brand p,
+.site-footer__details p {
+	font-size: 14px;
+	line-height: 1.7;
+	margin: 0 0 8px;
+	color: rgba(230, 240, 247, 0.88);
+}
+
+.site-footer__details i {
+	color: rgba(154, 204, 240, 0.95);
+	width: 16px;
 	text-align: center;
+}
+
+.site-footer__links ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: grid;
+	gap: 8px;
+}
+
+.site-footer__links a {
+	color: rgba(233, 242, 248, 0.88);
+	text-decoration: none;
+	transition:
+		color 0.2s ease,
+		transform 0.2s ease;
+	display: inline-block;
+}
+
+.site-footer__links a:hover {
+	color: #ffffff;
+	transform: translateX(3px);
+}
+
+.site-footer__bottom {
+	margin-top: 26px;
+	padding-top: 16px;
+	border-top: 1px solid rgba(196, 220, 237, 0.22);
+	text-align: center;
+	font-size: 13px;
+	color: rgba(220, 233, 241, 0.8);
+}
+
+.site-footer audio {
+	display: none;
 }
 
 .dress-code-circles {
@@ -567,6 +647,15 @@ footer {
 	.share-photos-grid {
 		grid-template-columns: 1fr;
 	}
+
+	.site-footer {
+		padding: 40px 0 24px;
+	}
+
+	.site-footer__inner {
+		grid-template-columns: 1fr;
+		gap: 22px;
+	}
 }
 
 @media (max-width: 640px) {
@@ -646,11 +735,28 @@ footer {
 		padding: 18px;
 		border-radius: 16px;
 	}
+
+	.site-footer {
+		margin-bottom: 84px;
+	}
+
+	.site-footer__inner,
+	.site-footer__bottom {
+		text-align: center;
+	}
+
+	.site-footer h4 {
+		font-size: 36px;
+	}
+
+	.site-footer__links a:hover {
+		transform: none;
+	}
 }
 
 .guest-messages {
 	padding: 40px 0;
-	background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(204, 225, 241, 0.35));
+	background: var(--color-surface);
 }
 
 .guest-messages .container {
