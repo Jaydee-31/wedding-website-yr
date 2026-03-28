@@ -1,6 +1,6 @@
 // Countdown timer
 (function () {
-	const weddingDate = new Date("April 18, 2026 14:00:00").getTime();
+	const weddingDate = new Date("April 18, 2026 13:30:00").getTime();
 	const countdownEl = document.querySelector(".countdown");
 
 	if (!countdownEl) return;
