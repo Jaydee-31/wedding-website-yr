@@ -356,6 +356,7 @@ footer {
 	overflow: hidden;
 	background: #ffffff;
 	box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+	text-align: left;
 }
 
 .fb-post-header {
@@ -430,7 +431,7 @@ footer {
 	font-style: italic;
 }
 
-.upload-guide {
+.upload-guide, .hashtag-guide {
 	text-align: center;
 }
 

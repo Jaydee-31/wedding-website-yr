@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	if (!gallerySlide || !gallery) return;
 
 	// List all images in assets/img/gallery/ (add/remove filenames as needed)
-	const images = ["IMG_0060.JPG", "IMG_0187.JPG", "IMG_0224.JPG", "IMG_0237.JPG", "IMG_0254.JPG", "IMG_0566.JPG", "IMG_0677.JPG", "IMG_9375.JPG", "IMG_9458.JPG", "IMG_9465.JPG", "IMG_9626.JPG", "IMG_9700.JPG", "IMG_9760.JPG", "IMG_9842.JPG"];
+	const images = ["1.JPG", "2.JPG", "3.JPG", "4.JPG", "5.JPG", "6.JPG", "7.JPG", "8.JPG", "9.JPG", "10.JPG", "11.JPG", "12.JPG", "13.JPG", "14.JPG"];
 
 	// Clear any existing content inside the slide container
 	gallerySlide.innerHTML = "";
