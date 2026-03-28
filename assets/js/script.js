@@ -419,9 +419,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			if ("IntersectionObserver" in window) {
 				const observer = new IntersectionObserver(
 					(entries) => {
-						const visibleEntry = entries
-							.filter((entry) => entry.isIntersecting)
-							.sort((first, second) => second.intersectionRatio - first.intersectionRatio)[0];
+						const visibleEntry = entries.filter((entry) => entry.isIntersecting).sort((first, second) => second.intersectionRatio - first.intersectionRatio)[0];
 
 						if (visibleEntry) {
 							setActiveDockLink(visibleEntry.target.id);
@@ -430,7 +428,7 @@ document.addEventListener("DOMContentLoaded", function () {
 					{
 						rootMargin: "-25% 0px -45% 0px",
 						threshold: [0.2, 0.35, 0.5, 0.7],
-					}
+					},
 				);
 
 				dockSections.forEach(({ section }) => observer.observe(section));
