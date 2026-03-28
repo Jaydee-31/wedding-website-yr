@@ -36,7 +36,7 @@
 			<h1>Ren & Yeng</h1>
 			<p class="mt-4">Wed | 04.18.2026 | 1:30 PM</p>
 			<div class="countdown"></div>
-			<button id="openTeaserBtn" class="teaser-cta" type="button">Watch Our Teaser <i class="fa-regular fa-circle-play ms-2"></i></button>
+			<button id="openTeaserBtn" class="teaser-cta button-pill--secondary" type="button">Watch Our Teaser <i class="fa-regular fa-circle-play ms-2"></i></button>
 		</header>
 
 		<section id="story" class="story">
@@ -302,9 +302,9 @@
 							<p class="fb-caption">Celebrating love with these beautiful souls today. Thank you for making our day unforgettable. <strong>#siYENGpaRENsahuli</strong></p>
 							<img src="assets/img/gallery/2.JPG" alt="Sample wedding post image" class="fb-image" />
 							<div class="fb-reactions">
-								<span><i class="fa-solid fa-thumbs-up"></i> 128</span>
-								<span><i class="fa-solid fa-heart"></i> 64</span>
-								<span><i class="fa-solid fa-comment"></i> 19 comments</span>
+								<span><i class="fa-solid fa-thumbs-up"></i> 418</span>
+								<span><i class="fa-solid fa-comment"></i> 26 comments</span>
+								<span><p>❤️😮👍</p></span>
 							</div>
 						</div>
 						<p class="hashtag-note">Quick tip: keep #siYENGpaRENsahuli in your caption so your post appears in our hashtag search.</p>
@@ -338,25 +338,27 @@
 					We also respectfully encourage our dear guests, as much as possible, to refrain from bringing toddlers or additional children. <br />
 					Please confirm your attendance by completing the RSVP form below on or before April 5, 2026.
 				</p>
-				<form id="messageForm">
-					<div class="form-group">
-						<label for="name">Name</label>
-						<input type="text" id="name" name="name" required />
-					</div>
-					<div class="form-group">
-						<label for="attendance">Can you attend?</label>
-						<select id="attendance" name="attendance" required>
-							<option value="">Select...</option>
-							<option value="coming">Yes, I'll be there</option>
-							<option value="not-coming">Sorry, can't make it</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="greetings">Message</label>
-						<textarea id="greetings" name="greetings" rows="4" required></textarea>
-					</div>
-					<button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane me-2"></i>Send</button>
-				</form>
+				<div class="rsvp-form-card">
+					<form id="messageForm">
+						<div class="form-group">
+							<label for="name">Name</label>
+							<input type="text" id="name" name="name" required />
+						</div>
+						<div class="form-group">
+							<label for="attendance">Can you attend?</label>
+							<select id="attendance" name="attendance" required>
+								<option value="">Select...</option>
+								<option value="coming">Yes, I'll be there</option>
+								<option value="not-coming">Sorry, can't make it</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="greetings">Message</label>
+							<textarea id="greetings" name="greetings" rows="4" required></textarea>
+						</div>
+						<button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane me-2"></i>Send</button>
+					</form>
+				</div>
 				<div id="messagesDisplay"></div>
 			</div>
 		</section>
