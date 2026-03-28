@@ -400,5 +400,57 @@ document.addEventListener("DOMContentLoaded", function () {
 		function setLikedMessageIds(ids) {
 			localStorage.setItem("likedMessageIds", JSON.stringify(ids));
 		}
+
+		const dockLinks = Array.from(document.querySelectorAll(".dock-link[data-section-link]"));
+		const dockSections = dockLinks
+			.map((link) => {
+				const sectionId = link.getAttribute("data-section-link");
+				return { link, section: document.getElementById(sectionId) };
+			})
+			.filter((item) => item.section);
+
+		function setActiveDockLink(sectionId) {
+			dockLinks.forEach((link) => {
+				link.classList.toggle("is-active", link.getAttribute("data-section-link") === sectionId);
+			});
+		}
+
+		if (dockSections.length > 0) {
+			if ("IntersectionObserver" in window) {
+				const observer = new IntersectionObserver(
+					(entries) => {
+						const visibleEntry = entries
+							.filter((entry) => entry.isIntersecting)
+							.sort((first, second) => second.intersectionRatio - first.intersectionRatio)[0];
+
+						if (visibleEntry) {
+							setActiveDockLink(visibleEntry.target.id);
+						}
+					},
+					{
+						rootMargin: "-25% 0px -45% 0px",
+						threshold: [0.2, 0.35, 0.5, 0.7],
+					}
+				);
+
+				dockSections.forEach(({ section }) => observer.observe(section));
+			} else {
+				const updateActiveOnScroll = () => {
+					let currentSectionId = dockSections[0].section.id;
+
+					dockSections.forEach(({ section }) => {
+						const rect = section.getBoundingClientRect();
+						if (rect.top <= window.innerHeight * 0.4) {
+							currentSectionId = section.id;
+						}
+					});
+
+					setActiveDockLink(currentSectionId);
+				};
+
+				updateActiveOnScroll();
+				window.addEventListener("scroll", updateActiveOnScroll, { passive: true });
+			}
+		}
 	}
 });

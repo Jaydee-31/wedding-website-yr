@@ -3,6 +3,7 @@ body {
 	font-family: "Poppins", sans-serif;
 	background: #faf7f5;
 	color: #333;
+	padding-bottom: 110px;
 }
 
 p {
@@ -12,6 +13,11 @@ p {
 html {
 	scroll-behavior: smooth;
 	scroll-snap-type: y mandatory;
+}
+
+header,
+section {
+	scroll-margin-top: 24px;
 }
 
 .save-date-banner {
@@ -207,6 +213,65 @@ header p {
 	line-height: 1;
 	box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
 	cursor: pointer;
+}
+
+.bottom-dock {
+	position: fixed;
+	left: 50%;
+	bottom: 18px;
+	transform: translateX(-50%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	width: min(calc(100vw - 24px), 560px);
+	padding: 10px;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.88);
+	box-shadow: 0 16px 40px rgba(20, 53, 80, 0.22);
+	backdrop-filter: blur(18px);
+	-webkit-backdrop-filter: blur(18px);
+	z-index: 1050;
+	border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.dock-link {
+	flex: 1 1 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+	min-width: 0;
+	padding: 10px 8px;
+	border-radius: 999px;
+	color: #5b6e80;
+	text-decoration: none;
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.02em;
+	transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.dock-link i {
+	font-size: 15px;
+}
+
+.dock-link:hover {
+	background: rgba(77, 143, 189, 0.12);
+	color: #2d5f8a;
+	transform: translateY(-1px);
+}
+
+.dock-link.is-active {
+	background: linear-gradient(135deg, #4d8fbd, #2d5f8a);
+	color: #ffffff;
+	box-shadow: 0 10px 18px rgba(45, 95, 138, 0.24);
+}
+
+.dock-link:focus-visible {
+	outline: 3px solid rgba(45, 95, 138, 0.35);
+	outline-offset: 2px;
 }
 
 @keyframes teaser-pop {
@@ -448,6 +513,28 @@ footer {
 @media (max-width: 900px) {
 	.share-photos-grid {
 		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 640px) {
+	body {
+		padding-bottom: 104px;
+	}
+
+	.bottom-dock {
+		bottom: 12px;
+		width: min(calc(100vw - 16px), 420px);
+		gap: 4px;
+		padding: 8px;
+	}
+
+	.dock-link {
+		padding: 10px 4px;
+		font-size: 10px;
+	}
+
+	.dock-link i {
+		font-size: 14px;
 	}
 }
 

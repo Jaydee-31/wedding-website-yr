@@ -28,7 +28,7 @@
 	</head>
 	<body>
 		<!-- <marquee class="save-date-banner" direction="left">04.18.2026</marquee> -->
-		<header>
+		<header id="home">
 			<div class="monogram">
 				<img src="assets/img/logo/logo-white.png" alt="" />
 			</div>
@@ -38,7 +38,7 @@
 			<button id="openTeaserBtn" class="teaser-cta" type="button">Watch Our Teaser <i class="fa-regular fa-circle-play"></i></button>
 		</header>
 
-		<section class="story">
+		<section id="story" class="story">
 			<div class="container">
 				<div class="section-title">Our Story</div>
 				<p class="story">
@@ -52,7 +52,7 @@
 		</section>
 
 		<!-- ======= Attire Section ======= -->
-		<section class="attire">
+		<section id="attire" class="attire">
 			<div class="container">
 				<div class="section-title">Attire</div>
 				<p><strong>Formal/ Semi-Formal</strong></p>
@@ -65,7 +65,7 @@
 			</div>
 		</section>
 
-		<section class="details">
+		<section id="details" class="details">
 			<div class="container">
 				<div class="section-title">Wedding Details</div>
 				<div class="location">
@@ -92,7 +92,7 @@
 		<!-- End Attire Section -->
 
 		<!-- ======= Entourage Section ======= -->
-		<section class="entourage">
+		<section id="entourage" class="entourage">
 			<div class="container">
 				<div class="section-title">The Entourage</div>
 				<div class="row parents">
@@ -279,7 +279,7 @@
 		<!-- End Entourage Section -->
 
 		<!-- Share Photos Section -->
-		<section class="share-photos-section">
+		<section id="share" class="share-photos-section">
 			<div class="container">
 				<div class="section-title">On Snap & Share</div>
 				<p>We'd love your help sharing our favorite moments online. Use our wedding hashtag <strong>#siYENGpaRENsahuli</strong> so we can find and enjoy your posts.</p>
@@ -329,7 +329,7 @@
 		<!-- End Share Photos -->
 
 		<!-- RSVP Section -->
-		<section class="guest-messages">
+		<section id="rsvp" class="guest-messages">
 			<div class="container">
 				<div class="section-title">RSVP</div>
 				<p class="section-description">
@@ -385,6 +385,29 @@
 				</video>
 			</div>
 		</div>
+
+		<nav class="bottom-dock" aria-label="Section navigation">
+			<a class="dock-link is-active" href="#home" data-section-link="home" aria-label="Go to home section">
+				<i class="fa-solid fa-house"></i>
+				<span>Home</span>
+			</a>
+			<a class="dock-link" href="#story" data-section-link="story" aria-label="Go to our story section">
+				<i class="fa-solid fa-heart"></i>
+				<span>Story</span>
+			</a>
+			<a class="dock-link" href="#details" data-section-link="details" aria-label="Go to wedding details section">
+				<i class="fa-solid fa-location-dot"></i>
+				<span>Details</span>
+			</a>
+			<a class="dock-link" href="#share" data-section-link="share" aria-label="Go to snap and share section">
+				<i class="fa-solid fa-camera-retro"></i>
+				<span>Share</span>
+			</a>
+			<a class="dock-link" href="#rsvp" data-section-link="rsvp" aria-label="Go to RSVP section">
+				<i class="fa-solid fa-envelope-open-text"></i>
+				<span>RSVP</span>
+			</a>
+		</nav>
 
 		<script>
 			window.onload = function () {
