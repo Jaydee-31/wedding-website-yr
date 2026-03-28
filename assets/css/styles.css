@@ -819,6 +819,16 @@ header p {
 	margin-top: 40px;
 }
 
+.messages-list {
+	display: flex;
+	flex-direction: column;
+}
+
+.messages-toggle-btn {
+	margin: 6px auto 0;
+	min-width: 220px;
+}
+
 .message-item {
 	background: linear-gradient(160deg, rgba(255, 255, 255, 0.95), rgba(245, 251, 255, 0.9));
 	padding: 14px 16px;

@@ -18,6 +18,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	const messageForm = document.getElementById("messageForm");
 	const messagesDisplay = document.getElementById("messagesDisplay");
+	const MAX_VISIBLE_MESSAGES = 5;
+	let isMessagesExpanded = false;
+	let cachedMessages = [];
 
 	if (!messageForm || !messagesDisplay) {
 		return;
@@ -102,17 +105,51 @@ document.addEventListener("DOMContentLoaded", function () {
 		try {
 			const q = window.firebaseFunctions.query(window.firebaseFunctions.collection(window.firebaseDB, "messages"), window.firebaseFunctions.orderBy("timestamp", "desc"));
 			const querySnapshot = await window.firebaseFunctions.getDocs(q);
-			messagesDisplay.innerHTML = "";
+			cachedMessages = [];
 			querySnapshot.forEach((doc) => {
-				const message = doc.data();
-				displayMessage(message, doc.id);
+				cachedMessages.push({
+					id: doc.id,
+					message: doc.data(),
+				});
 			});
+
+			renderMessages();
 		} catch (error) {
 			console.error("Error loading messages: ", error);
 		}
 	}
 
-	function displayMessage(message, id) {
+	function renderMessages() {
+		messagesDisplay.innerHTML = "";
+
+		const listContainer = document.createElement("div");
+		listContainer.className = "messages-list";
+
+		const shouldCollapse = cachedMessages.length > MAX_VISIBLE_MESSAGES;
+		const visibleMessages = shouldCollapse && !isMessagesExpanded ? cachedMessages.slice(0, MAX_VISIBLE_MESSAGES) : cachedMessages;
+
+		visibleMessages.forEach(({ message, id }) => {
+			displayMessage(message, id, listContainer);
+		});
+
+		messagesDisplay.appendChild(listContainer);
+
+		if (shouldCollapse) {
+			const toggleBtn = document.createElement("button");
+			toggleBtn.type = "button";
+			toggleBtn.className = "button-pill button-pill--secondary messages-toggle-btn";
+			toggleBtn.textContent = isMessagesExpanded ? "See less" : `See more (${cachedMessages.length - MAX_VISIBLE_MESSAGES})`;
+
+			toggleBtn.addEventListener("click", () => {
+				isMessagesExpanded = !isMessagesExpanded;
+				renderMessages();
+			});
+
+			messagesDisplay.appendChild(toggleBtn);
+		}
+	}
+
+	function displayMessage(message, id, container = messagesDisplay) {
 		const messageDiv = document.createElement("div");
 		messageDiv.className = "message-item";
 
@@ -158,7 +195,7 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
     `;
 
-		messagesDisplay.appendChild(messageDiv);
+		container.appendChild(messageDiv);
 
 		const likeBtn = messageDiv.querySelector(".like-btn");
 		likeBtn.addEventListener("click", async () => {
@@ -222,7 +259,7 @@ document.addEventListener("DOMContentLoaded", function () {
 							showConfirmButton: false,
 						});
 
-						messageDiv.remove();
+						await loadMessages();
 					} catch (error) {
 						console.error("Error deleting message:", error);
 						Swal.fire({
