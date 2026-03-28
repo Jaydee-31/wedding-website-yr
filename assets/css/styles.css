@@ -436,8 +436,8 @@ header p {
 
 .site-footer__brand p,
 .site-footer__details p {
-	font-size: 14px;
-	line-height: 1.7;
+	font-size: 10pt;
+	line-height: 1.5;
 	margin: 0 0 8px;
 	color: rgba(230, 240, 247, 0.88);
 }
@@ -453,7 +453,7 @@ header p {
 	padding: 0;
 	margin: 0;
 	display: grid;
-	gap: 8px;
+	gap: 4px;
 }
 
 .site-footer__links a {
@@ -463,6 +463,7 @@ header p {
 		color 0.2s ease,
 		transform 0.2s ease;
 	display: inline-block;
+	font-size: 10pt;
 }
 
 .site-footer__links a:hover {
@@ -538,10 +539,10 @@ header p {
 	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
 }
 
-.share-photos-card h5 {
+.share-photos-card h4 {
 	font-family: "Style Script", cursive;
 	margin-bottom: 16px;
-	font-size: 18pt;
+	font-size: 22pt;
 	font-weight: 600;
 	text-align: center;
 }
