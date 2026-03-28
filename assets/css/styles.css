@@ -327,6 +327,113 @@ footer {
 	margin-top: 20px;
 }
 
+.share-photos-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 24px;
+	margin-top: 24px;
+	text-align: left;
+}
+
+.share-photos-card {
+	background: #fff;
+	border: 1px solid #e8edf2;
+	border-radius: 12px;
+	padding: 24px;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+.share-photos-card h5 {
+	font-family: "Style Script", cursive;
+	margin-bottom: 16px;
+	font-weight: 600;
+	text-align: center;
+}
+
+.fb-post-mock {
+	border: 1px solid #dfe5ec;
+	border-radius: 12px;
+	overflow: hidden;
+	background: #ffffff;
+	box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+}
+
+.fb-post-header {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 14px 14px 10px;
+}
+
+.fb-avatar {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(145deg, #4d8fbd, #2d5f8a);
+	color: #fff;
+	font-size: 12px;
+	font-weight: 700;
+}
+
+.fb-name {
+	font-size: 14px;
+	font-weight: 700;
+	margin: 0;
+	line-height: 1.2;
+	color: #1f2937;
+}
+
+.fb-meta {
+	font-size: 12px;
+	margin: 2px 0 0;
+	color: #6b7280;
+}
+
+.fb-caption {
+	padding: 0 14px 12px;
+	margin: 0;
+	font-size: 14px;
+	line-height: 1.5;
+	color: #2b333b;
+}
+
+.fb-image {
+	display: block;
+	width: 100%;
+	aspect-ratio: 1 / 1;
+	object-fit: cover;
+	background: #f3f4f6;
+}
+
+.fb-reactions {
+	display: flex;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 10px 14px;
+	font-size: 12px;
+	color: #5f6d7a;
+	border-top: 1px solid #eef1f5;
+}
+
+.fb-reactions i {
+	margin-right: 4px;
+	color: #2d5f8a;
+}
+
+.hashtag-note {
+	margin-top: 14px;
+	font-size: 14px;
+	color: #5f6d7a;
+	font-style: italic;
+}
+
+.upload-guide {
+	text-align: center;
+}
+
 .qr-code {
 	text-align: center;
 }
@@ -335,6 +442,12 @@ footer {
 	margin-top: 10px;
 	border: 2px solid #ddd;
 	border-radius: 4px;
+}
+
+@media (max-width: 900px) {
+	.share-photos-grid {
+		grid-template-columns: 1fr;
+	}
 }
 
 .guest-messages {
