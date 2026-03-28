@@ -35,12 +35,13 @@
 			<h1>Ren & Yeng</h1>
 			<p>Wednesday, 18 April 2026 | 1:30 PM</p>
 			<div class="countdown"></div>
+			<button id="openTeaserBtn" class="teaser-cta" type="button">Watch Our Teaser <i class="fa-regular fa-circle-play"></i></button>
 		</header>
 
 		<section class="story">
 			<div class="container">
 				<div class="section-title">Our Story</div>
-				<p class="story">Two hearts, one beautiful journey. Yeng and Ren met, became best friends, and discovered a love that continues to grow stronger every day. Now they invite you to celebrate the beginning of their forever together.</p>
+				<p class="story"><strong>8finity 🤍 </strong><br> <br />Their story began with a call-out during a CMU Palaro meeting—she stood firm, he walked out annoyed, and neither of them expected that moment to mean anything more. But one message changed everything. What started as arguments turned into conversations, then into something soft, real, and lasting. From strangers to enemies, and eventually to lovers—eight years later, they now choose forever together. And now, with hearts full and hands intertwined, they invite you to witness the moment their once unexpected story becomes a lifelong promise—sealed with love, faith, and a beautiful “I do.” ♾️✨</p>
 			</div>
 			<div class="gallery">
 				<div class="gallery-slide"></div>
@@ -327,7 +328,7 @@
 		<footer>
 			<p>With love, Ren & Yeng</p>
 			<audio autoplay loop>
-				<source src="assets/audio/pure-love-304010.mp3" type="audio/mpeg" />
+				<source src="assets/audio/tahanan.mp3" type="audio/mpeg" />
 			</audio>
 		</footer>
 
@@ -337,9 +338,28 @@
 			<img src="" alt="" />
 		</div>
 
+		<!-- Teaser popup modal -->
+		<div class="teaser-modal" id="teaserModal" aria-hidden="true">
+			<div class="teaser-modal__backdrop" data-close-teaser></div>
+			<div class="teaser-modal__dialog" role="dialog" aria-modal="true" aria-label="Wedding teaser video">
+				<button id="closeTeaserBtn" class="teaser-modal__close" type="button" aria-label="Close teaser">×</button>
+				<video id="teaserVideo" controls playsinline preload="metadata" poster="assets/img/gallery/IMG_9842.JPG">
+					<source src="assets/video/teaser.mp4" type="video/mp4" />
+					Your browser does not support the video tag.
+				</video>
+			</div>
+		</div>
+
 		<script>
 			window.onload = function () {
 				const audio = document.querySelector("audio");
+				const teaserModal = document.getElementById("teaserModal");
+				const teaserVideo = document.getElementById("teaserVideo");
+				const openTeaserBtn = document.getElementById("openTeaserBtn");
+				const closeTeaserBtn = document.getElementById("closeTeaserBtn");
+				let wasAudioPlayingBeforeTeaser = false;
+				let audioFadeTimer = null;
+				const audioDefaultVolume = audio ? audio.volume || 1 : 1;
 
 				function playAudio() {
 					if (!audio) return;
@@ -355,6 +375,102 @@
 						document.addEventListener("touchstart", resumeOnFirstInteraction);
 						document.addEventListener("keydown", resumeOnFirstInteraction);
 					});
+				}
+
+				function playAudioWithFade(duration = 3000) {
+					if (!audio) return;
+
+					if (audioFadeTimer) {
+						clearInterval(audioFadeTimer);
+						audioFadeTimer = null;
+					}
+
+					audio.volume = 0;
+					audio.play().catch(() => {
+						audio.volume = audioDefaultVolume;
+					});
+
+					const steps = 12;
+					const stepDuration = Math.max(40, Math.floor(duration / steps));
+					const stepVolume = audioDefaultVolume / steps;
+					let currentStep = 0;
+
+					audioFadeTimer = setInterval(() => {
+						if (!audio || audio.paused) return;
+
+						currentStep += 1;
+						audio.volume = Math.min(audioDefaultVolume, currentStep * stepVolume);
+
+						if (currentStep >= steps) {
+							audio.volume = audioDefaultVolume;
+							clearInterval(audioFadeTimer);
+							audioFadeTimer = null;
+						}
+					}, stepDuration);
+				}
+
+				function openTeaserModal() {
+					if (!teaserModal || !teaserVideo) return;
+
+					wasAudioPlayingBeforeTeaser = !!audio && !audio.paused && !audio.ended;
+					if (audioFadeTimer) {
+						clearInterval(audioFadeTimer);
+						audioFadeTimer = null;
+					}
+					if (audio) {
+						audio.pause();
+						audio.volume = audioDefaultVolume;
+					}
+
+					teaserModal.classList.add("is-open");
+					teaserModal.setAttribute("aria-hidden", "false");
+					document.body.classList.add("modal-open");
+					teaserVideo.currentTime = 0;
+					teaserVideo.play().catch(() => {});
+				}
+
+				function closeTeaserModal() {
+					if (!teaserModal || !teaserVideo) return;
+
+					teaserVideo.pause();
+					teaserModal.classList.remove("is-open");
+					teaserModal.setAttribute("aria-hidden", "true");
+					document.body.classList.remove("modal-open");
+
+					if (wasAudioPlayingBeforeTeaser) {
+						playAudioWithFade();
+					}
+				}
+
+				if (openTeaserBtn) {
+					openTeaserBtn.addEventListener("click", openTeaserModal);
+				}
+
+				if (closeTeaserBtn) {
+					closeTeaserBtn.addEventListener("click", closeTeaserModal);
+				}
+
+				if (teaserModal) {
+					teaserModal.addEventListener("click", function (event) {
+						if (event.target && event.target.matches("[data-close-teaser]")) {
+							closeTeaserModal();
+						}
+					});
+				}
+
+				document.addEventListener("keydown", function (event) {
+					if (event.key === "Escape" && teaserModal && teaserModal.classList.contains("is-open")) {
+						closeTeaserModal();
+					}
+				});
+
+				if (teaserVideo) {
+					teaserVideo.addEventListener("play", function () {
+						if (audio) {
+							audio.pause();
+						}
+					});
+					teaserVideo.addEventListener("ended", closeTeaserModal);
 				}
 
 				// 1. Get URL parameters
