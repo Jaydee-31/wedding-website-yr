@@ -133,7 +133,8 @@ window.addEventListener("load", function () {
 		Swal.fire({
 			title: "You're invited!",
 			html: `<p>Hi <strong>${name}</strong>, join us on our wedding day.
-				We’ve reserved <strong>${number}</strong> seat(s) for you. </p>`,
+				We’ve reserved <strong>${number}</strong> seat(s) for you.</p>
+				<p>Please fill up the RSVP form to confirm your attendance.</p>`,
 			icon: "success",
 			showConfirmButton: true,
 			buttonsStyling: false,

@@ -181,6 +181,19 @@ header p {
 	margin-top: 24px;
 }
 
+.header-cta-group {
+	margin-top: 24px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 12px;
+	flex-wrap: wrap;
+}
+
+.header-cta-group .teaser-cta {
+	margin-top: 0;
+}
+
 .button-pill:hover,
 .teaser-cta:hover,
 .btn.btn-primary:hover,
